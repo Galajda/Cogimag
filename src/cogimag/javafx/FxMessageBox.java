@@ -16,7 +16,7 @@
  */
 package cogimag.javafx;
 
-import cogimag.javafx.Constants;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -63,7 +63,7 @@ public class FxMessageBox {
         stage.setMinWidth(300);
         stage.setMaxWidth(600);
         //set width according to content. 
-        stage.getIcons().add(new Image("cogimag_java_utils/images/attention.jpg"));
+        stage.getIcons().add(new Image("cogimag/javafx/images/attention.jpg"));
         
         Label msgArea = new Label(message); //how to wrap message?
         Button btnOk = new Button(FxMessageBox.BTN_OK_TXT);
@@ -83,7 +83,7 @@ public class FxMessageBox {
         stage.setMinWidth(300);
         stage.setMaxWidth(900);
         //set width according to content. 
-        stage.getIcons().add(new Image("cogimag_java_utils/images/question.jpg"));
+        stage.getIcons().add(new Image("cogimag/javafx/images/question.jpg"));
         
         Label msgArea = new Label(message); //how to wrap message?
         Button btnOk = new Button(FxMessageBox.BTN_OK_TXT);
@@ -158,7 +158,7 @@ public class FxMessageBox {
         stage.setMinWidth(300);
         stage.setMaxWidth(600);
         //set width according to content. 
-        stage.getIcons().add(new Image("cogimag_java_utils/images/attention.jpg"));
+        stage.getIcons().add(new Image("cogimag/javafx/images/attention.jpg"));
 //        Boolean loginSuccess2 = false;
         final Label lblPassword = new Label(FxMessageBox.LOGIN_LABEL); //how to wrap message?
         final PasswordField pwdField = new PasswordField();
