@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Michal G. <Michal.G at cogitatummagnumtelae.com>
+ * Copyright (C) 2017 Michal G.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author Michal G. <Michal.G at cogitatummagnumtelae.com>
+ * @author Michal G. 
  */
 public class FxLoginDialog {
     
