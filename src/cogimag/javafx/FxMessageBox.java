@@ -31,7 +31,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- * A modal message box that displays an informational message
+ * A modal dialog box that displays an informational message
  * with an OK button.
  * @author Michal G. 
  */
@@ -40,22 +40,17 @@ public class FxMessageBox {
     private static final String BTN_OK_TXT = "OK";
     private static final String BTN_CANCEL_TXT = "Cancel";
     private Boolean confirmDialogResult;
-    private Boolean loginSuccess;
-    
-    private static final String LOGIN_TITLE = "Login";
-    private static final String LOGIN_LABEL = "Enter the password";
     
     public FxMessageBox() { 
-       confirmDialogResult = false;
-        loginSuccess = false;
+       confirmDialogResult = false;        
     }
     
     /**
      * Displays a message box using FX tools
-     * @param message The body of the message
      * @param title The title of the window
+     * @param message The body of the message     
      */
-    public static void show(String message, String title)
+    public static void show(String title, String message)
     {        
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -75,7 +70,13 @@ public class FxMessageBox {
         stage.setScene(scene);
         stage.showAndWait();
     }
-    public Boolean confirm(String message, String title) {
+    /**
+     * Displays a modal dialog box with a message, OK and Cancel buttons.
+     * @param title title for the dialog box
+     * @param message details of the message, such as a yes/no question     
+     * @return true if the user clicks "OK"
+     */
+    public Boolean confirm(String title, String message) {
         Stage stage = new Stage();
 //        Boolean response = false;
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -143,68 +144,5 @@ public class FxMessageBox {
 //            System.out.println("handling the click in inner class");
 //        }        
 //    }
-    /**
-     * EXPERIMENTAL. passing vars from event handler to the dialog box is difficult.
-     * the handler can, however change the style of the text field. 
-     * use the style of the pwd field to indicate success
-     * @param realPassword where should the app store this? hash in xml?
-     * @return true if login succeeds, false if login fails
-     */
-    public Boolean login(String realPassword) {
-        
-        final Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle(FxMessageBox.LOGIN_TITLE);
-        stage.setMinWidth(300);
-        stage.setMaxWidth(600);
-        //set width according to content. 
-        stage.getIcons().add(new Image("cogimag/javafx/images/attention.jpg"));
-//        Boolean loginSuccess2 = false;
-        final Label lblPassword = new Label(FxMessageBox.LOGIN_LABEL); //how to wrap message?
-        final PasswordField pwdField = new PasswordField();
-        Button btnOk = new Button(FxMessageBox.BTN_OK_TXT);
-//        btnOk.setOnAction(e->validatePassword(e, pwdField.getText(), realPassword, stage));
-        btnOk.setOnAction(
-            new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    System.out.print("validating password " + pwdField.getText() + " against " + realPassword);
-                    Boolean valid = (pwdField.getText() != null && 
-                            realPassword != null  && pwdField.getText().equals(realPassword));
-                    if (valid) {
-                        pwdField.setStyle(Constants.STYLE_TEXT_FLD_OK);
-                        //let user x out?
-                            stage.close();
-                    }
-                    else {
-                        pwdField.setStyle(Constants.STYLE_TEXT_FLD_FAIL);
-                    }
-                    System.out.println(" result " + valid);
-                }
-            }
-        );
-        VBox pane = new VBox(30);
-        pane.getChildren().addAll(lblPassword, pwdField, btnOk);
-        pane.setAlignment(Pos.CENTER);
-        Scene scene = new Scene(pane);
-        stage.setScene(scene);
-        stage.showAndWait();
-        
-        return pwdField.getStyle().equals(Constants.STYLE_TEXT_FLD_OK);
-        //flip because app constant style is guaranteed to be non-null?
-        //if stage is already closed, what is the style?
-    }
-    private void validatePassword(ActionEvent e, String testPwd, String realPwd, Stage s) {
-        System.out.print("validating password " + testPwd + " against " + realPwd);
-        loginSuccess = (testPwd != null && realPwd != null  && testPwd.equals(realPwd));
-        System.out.println(" result " + loginSuccess);
-        if (loginSuccess) {
-            s.close();
-        }
-        else {
-            
-        }
-        
-        
-    }
+    
 }
