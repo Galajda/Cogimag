@@ -31,7 +31,7 @@ public class FxComboBox extends ComboBox<String> {
      */
     public FxComboBox() {
         super();
-        super.setOnKeyReleased(e -> comboBoxKeyboardShortcut(e));
+        super.setOnKeyPressed(e -> comboBoxKeyboardShortcut(e));
     }
     /**
      * The combo box may be initialized with the values of the options.
@@ -39,7 +39,7 @@ public class FxComboBox extends ComboBox<String> {
      */
     public FxComboBox(Collection<String> items) {
         super.getItems().addAll(items);
-        super.setOnKeyReleased(e -> comboBoxKeyboardShortcut(e));
+        super.setOnKeyPressed(e -> comboBoxKeyboardShortcut(e));
     }
     /**
      * The combo box may be initialized with an id and the Collection of option values.
@@ -50,7 +50,7 @@ public class FxComboBox extends ComboBox<String> {
         super();
         super.getItems().addAll(items);
         super.setId(control_id);
-        super.setOnKeyReleased(e -> comboBoxKeyboardShortcut(e));
+        super.setOnKeyPressed(e -> comboBoxKeyboardShortcut(e));
     }
     
     
