@@ -29,7 +29,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- *
+ * Please do not use this.
  * @author Michal G. 
  */
 public class FxLoginDialog {
