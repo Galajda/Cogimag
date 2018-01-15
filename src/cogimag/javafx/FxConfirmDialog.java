@@ -23,7 +23,7 @@ import javafx.stage.Stage;
 public class FxConfirmDialog {
     private Boolean confirmDialogResult;
     
-    FxConfirmDialog() {
+    public FxConfirmDialog() {
         confirmDialogResult = false;     
     }
     
@@ -31,7 +31,8 @@ public class FxConfirmDialog {
      * Displays a modal dialog box with a message, OK and Cancel buttons.
      * @param title title for the dialog box
      * @param message details of the message, such as a yes/no question     
-     * @return true if the user clicks "OK"
+     * @return true if the user clicks "OK". false if the user clicks "Cancel"
+     * or X's out the message box.
      */
     public Boolean confirm(String title, String message) {
         Stage stage = new Stage();
