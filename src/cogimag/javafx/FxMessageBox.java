@@ -35,15 +35,13 @@ import javafx.stage.Stage;
  * @author Michal G. 
  */
 public class FxMessageBox {
-    
-    
-    
-    public FxMessageBox() { 
-          
-    }
+    /**
+     * The constructor is never needed. The single method of this class is static. 
+     */
+    public FxMessageBox() { }
     
     /**
-     * Displays a message box using FX tools
+     * Displays a message box using FX tools. User clicks "OK" when done.
      * @param title The title of the window
      * @param message The body of the message     
      */

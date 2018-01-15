@@ -17,8 +17,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- *
- * @author Michal G. <Michal.G at cogitatummagnumtelae.com>
+ * A modal dialog box with OK and Cancel buttons.
+ * @author Michal G.
  */
 public class FxConfirmDialog {
     private Boolean confirmDialogResult;
