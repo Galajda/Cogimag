@@ -44,6 +44,7 @@ public class FxConfirmDialog {
      * or X's out the message box.
      */
     public Boolean confirm(String title, String message) {
+        //<editor-fold desc="boring details">
         Stage stage = new Stage();
 //        Boolean response = false;
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -73,7 +74,7 @@ public class FxConfirmDialog {
         System.out.println("done waiting");
 //        stage.close();
         return confirmDialogResult;
-        
+        // </editor-fold>
     }
     private void getAnswer(ActionEvent e, Stage s) {
 //        System.out.println("ok/cancel clicked " + e.getSource());
