@@ -1,4 +1,4 @@
-/* * Copyright (C) 2017 Michal G.
+/* * Copyright (C) 2018 Michal G.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,9 @@ public class IterableElements  {
     public IterableElements(Elements xom_element_collection) {
         eleColl = xom_element_collection;
     }
-    
+    /**
+     * Copy structure of xom Element. Put iterator in inner class.
+     */
     private class ElementIterator implements Iterator {  
         int index;
         private ElementIterator() {
@@ -38,10 +40,13 @@ public class IterableElements  {
         }
         @Override
         public boolean hasNext() {
-            return ((eleColl.size() - index - 1) > 0);
+            return ((eleColl.size() - index) > 0);
         }
         @Override
         public Object next() throws NoSuchElementException {
+//            Element el = new Element("p");
+//            el.get
+            
             return eleColl.get(index++);        
         }
     }
