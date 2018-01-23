@@ -22,7 +22,12 @@ import javafx.scene.input.KeyEvent;
 /**
  * A subclass of the ComboBox. All normal features of the ComboBox are supported.
  * The extra feature matches the user's keypress with the selection.
- * Credit to Stack Overflow 13362607
+ * Credit to Stack Overflow 13362607. That example refines the selection as the user
+ * presses more keys. For example, if the list contains Cobra, Cow, Crow and Dog, pressing
+ * C will filter out Dog. Subsequently pressing O will reduce the list to Cobra and Cow.
+ * By contrast, this method matches only the first letter. Using the above list as an
+ * example, pressing C once will match Cobra. Pressing O will match with nothing. Pressing
+ * C a second time will match with Cow, the second C word.
  * @author Michal G. 
  */
 public class FxComboBox extends ComboBox<String> {
@@ -81,8 +86,6 @@ public class FxComboBox extends ComboBox<String> {
             }
         }
 //        e.consume();
-        
-        
         
     }
     
