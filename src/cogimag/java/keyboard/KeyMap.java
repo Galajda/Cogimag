@@ -24,35 +24,23 @@ import java.awt.event.KeyEvent;
  * @author Michal G. <Michal.G at cogitatummagnumtelae.com>
  */
 public class KeyMap {
-//    public static final String KEY_EXCL = "!";
-    private static final int[] mapKeyArray = makeMapKeyArray();
-    private static final CharConstruction[] mapValueArray = makeMapValueArray() ;
     
     public static final HashMap<Integer, CharConstruction> charMap = MakeMap();
     
-    private static int[] makeMapKeyArray() {
-        return new int[]{32, 33, 34, 35};
-    }
-    private static CharConstruction[] makeMapValueArray() {
-        CharConstruction[] array = null ;
-        array[0] = new CharConstruction(" ", KeyEvent.VK_SPACE, false);
-        array[1] = new CharConstruction("!", KeyEvent.VK_1, true);
-        array[2] = new CharConstruction("\"", KeyEvent.VK_3, true);
-        array[3] = new CharConstruction("#", KeyEvent.VK_3, true);
-
-        return array;
-    }
     
-    private static HashMap MakeMap() {
+    public static HashMap MakeMap() {
+        System.out.println("parent static method");
+        
         HashMap<Integer, CharConstruction> map = new HashMap<>();
-//        CharConstruction zero_key = new CharConstruction("0", KeyEvent.VK_0,false);
-//        map.put(48, zero_key);
+
         map.put(33, new CharConstruction("!", KeyEvent.VK_1, true));
         map.put(34, new CharConstruction("\"", KeyEvent.VK_QUOTE, true));
-//        for (int i=0;i<mapKeyArray.length;i++) {
-//            map.put(mapKeyArray[i], mapValueArray[i]);
+        map.put(35, new CharConstruction("#", KeyEvent.VK_3, true));
+
 //        }
         return map;
     }
-    
+    public void inheritMe() {
+        
+    }
 }

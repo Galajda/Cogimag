@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cogimag.java.keyboard;
+package cogimag.java.keyboard.junk;
 import java.io.BufferedInputStream; 
 import java.io.IOException;
 /**

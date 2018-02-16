@@ -26,7 +26,9 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import javafx.scene.input.KeyCode;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -39,10 +41,19 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  * Main method to be run during application development. <br/>
- * This class provides a simple window with 
- * a text input box and a text output box. The user will type one character from the keyboard 
- * into the text box. The method *************** will run through all possible KeyEvent.VK_ keys, 
- * with and without shift. When a match is found with the input string, the method will print the 
+ * This class automates the process of creating a HashMap for use by Robot or manually triggered KeyEvent.
+ * The class provides a simple window with a text input box and a text output box. The user will 
+ * type one character from the keyboard into the text input  box. The keyPressed event captures the 
+ * java.awt.event.KeyEvent.VK_ code as an integer and checks the status of the shift key (is this character 
+ * on the first level of the keyboard, or must the user press shift to obtain it, as for upper-case letters?).
+ * The keyTyped event captures the ASCII number of the displayed character and its String representation.
+ * With these four parameters, an entry in the KeyMap HashMap can be constructed. For readability, the VK_
+ * integer is converted into its class name, e.g., KeyEvent.VK_A. The developer may press every printable
+ * character on the local keyboard, obtaining a complete list of the KeyMap entries needed to read and type 
+ * the characters on the client's keyboard. The built-in KeyMap class contains such a list for the US-English
+ * QWERTY keyboard. If the client uses a different keyboard, the developer may extend the built-in class
+ * and hide the MakeMap() method with a new method containing the client's keyboard map.
+ * 
  * 
  * do " and \ need escape char?
  * <br/><br/>
@@ -69,6 +80,14 @@ public class MapGenerator extends JFrame implements KeyListener, ActionListener 
     private CharConstruction charCon;
     
     public static void main(String[] args) {
+//        KeyMap.MakeMap();
+        HashMap<Integer, CharConstruction> parentKeyMap =KeyMap.MakeMap();
+        System.out.println("parent key map size " + parentKeyMap.size());
+        
+        HashMap<Integer, CharConstruction> childKeyMap =sample_extended_key_map.MakeMap();
+        System.out.println("child key map size " + childKeyMap.size());
+        CharConstruction charCon = childKeyMap.get(33);
+        System.out.println("first value from child key map " + charCon.rendering);
         try {
             //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
             //UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");

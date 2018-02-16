@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cogimag.java.keyboard;
+package cogimag.java.keyboard.junk;
 
+import cogimag.java.keyboard.CharConstruction;
+import cogimag.java.keyboard.MapGenerator;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
