@@ -17,7 +17,7 @@
 package cogimag.java.keyboard;
 
 /**
- *
+ * @deprecated 
  * @author Michal G. <Michal.G at cogitatummagnumtelae.com>
  */
 public enum KeyNamesEnum {

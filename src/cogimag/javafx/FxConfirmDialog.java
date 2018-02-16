@@ -70,9 +70,9 @@ public class FxConfirmDialog {
         pane.setAlignment(Pos.CENTER);
         Scene scene = new Scene(pane);
         stage.setScene(scene);
-        System.out.println("about to wait");
+//        System.out.println("about to wait");
         stage.showAndWait(); //thread waits here until button is clicked
-        System.out.println("done waiting");
+//        System.out.println("done waiting");
 //        stage.close();
         return confirmDialogResult;
         

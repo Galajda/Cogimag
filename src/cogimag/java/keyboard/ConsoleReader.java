@@ -8,6 +8,7 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 /**
  * From Sams Teach Yourself Java by Rogers Cadenhead. Listing 15-4.
+ * Not used.
  * @author Michal G. <Michal.G at cogitatummagnumtelae.com>
  */
 public class ConsoleReader {
@@ -26,16 +27,12 @@ public class ConsoleReader {
                 }                
             }
             while (weitergehen);
-            inStream.close();
-            return oneLine.toString();
-            
+//            inStream.close();
+            return oneLine.toString();            
         }
         catch (IOException ex) { 
             System.out.println("error reading console " + ex.getMessage());
             return null;
-        }
-        
-        
-        
+        }        
     }
 }
