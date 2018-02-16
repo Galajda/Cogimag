@@ -80,10 +80,11 @@ public class MapGenerator extends JFrame implements KeyListener, ActionListener 
     private CharConstruction charCon;
     
     public static void main(String[] args) {
-//        KeyMap.MakeMap();
+        //demonstration of static method hiding
 //        HashMap<Integer, CharConstruction> parentKeyMap =KeyMap.MakeMap();
 //        System.out.println("parent key map size " + parentKeyMap.size());
-        
+//        CharConstruction parentCharCon = parentKeyMap.get(33);
+//        System.out.println("first value from parent key map " + parentCharCon.rendering);
 //        HashMap<Integer, CharConstruction> childKeyMap =sample_extended_key_map.MakeMap();
 //        System.out.println("child key map size " + childKeyMap.size());
 //        CharConstruction charCon = childKeyMap.get(33);
