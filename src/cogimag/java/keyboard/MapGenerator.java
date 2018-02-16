@@ -172,8 +172,7 @@ public class MapGenerator extends JFrame implements KeyListener, ActionListener 
 //            txtOutput.setCaretPosition(txtOutput.getDocument().getLength());
             vkNumber = e.getKeyCode();
             isShifted = ("Shift".equals(KeyEvent.getModifiersExText(e.getModifiersEx())));
-        }
-        
+        }        
     }
 
     @Override
@@ -222,16 +221,13 @@ public class MapGenerator extends JFrame implements KeyListener, ActionListener 
         sb.append(ascii_number);
         sb.append(", new CharConstruction(\"");
         sb.append(char_con.rendering); 
-        sb.append("\", ");
-        
+        sb.append("\", ");        
 //        sb.append(char_con.keyEventConstant); //should I write this as KeyEvent.VK_ ?
         sb.append("KeyEvent.");
-        sb.append(MapGenerator.getVkCode(char_con.keyEventConstant));
-        
+        sb.append(MapGenerator.getVkCode(char_con.keyEventConstant));        
         sb.append(", ");
         sb.append(char_con.isShifted);
-        sb.append("));");
-        //        map.put(33, new CharConstruction("!", KeyEvent.VK_1, true));
+        sb.append("));");        
         
         return sb.toString();
     }
@@ -242,7 +238,7 @@ public class MapGenerator extends JFrame implements KeyListener, ActionListener 
         for (Field f : classFields) {
             
             if (f.getName().startsWith("VK_")) {
-                int vkValue = -1;
+                int vkValue;
                 try {
                     vkValue = f.getInt(f);
                     if (testVal == vkValue) {
