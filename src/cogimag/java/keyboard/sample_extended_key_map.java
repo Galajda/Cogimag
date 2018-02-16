@@ -14,9 +14,8 @@ import java.util.HashMap;
  * @author MichalG HP Envy
  */
 public class sample_extended_key_map extends KeyMap {
-    public static HashMap MakeMap() {
-        
-        System.out.println("child static method");
+    public static HashMap MakeMap() {        
+//        System.out.println("child static method");
         HashMap<Integer, CharConstruction> map = new HashMap<>();
 
         map.put(33, new CharConstruction("1", KeyEvent.VK_1, false));

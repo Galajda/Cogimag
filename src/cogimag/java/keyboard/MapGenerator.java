@@ -55,7 +55,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  * and hide the MakeMap() method with a new method containing the client's keyboard map.
  * 
  * 
- * do " and \ need escape char?
+ * " and \ need escape char. currently this must be fixed manually
  * <br/><br/>
  * adapted from KeyEventDemo.java (attached) by Oracle.
  * Help at https://docs.oracle.com/javase/tutorial/uiswing/events/keylistener.html
@@ -81,13 +81,13 @@ public class MapGenerator extends JFrame implements KeyListener, ActionListener 
     
     public static void main(String[] args) {
 //        KeyMap.MakeMap();
-        HashMap<Integer, CharConstruction> parentKeyMap =KeyMap.MakeMap();
-        System.out.println("parent key map size " + parentKeyMap.size());
+//        HashMap<Integer, CharConstruction> parentKeyMap =KeyMap.MakeMap();
+//        System.out.println("parent key map size " + parentKeyMap.size());
         
-        HashMap<Integer, CharConstruction> childKeyMap =sample_extended_key_map.MakeMap();
-        System.out.println("child key map size " + childKeyMap.size());
-        CharConstruction charCon = childKeyMap.get(33);
-        System.out.println("first value from child key map " + charCon.rendering);
+//        HashMap<Integer, CharConstruction> childKeyMap =sample_extended_key_map.MakeMap();
+//        System.out.println("child key map size " + childKeyMap.size());
+//        CharConstruction charCon = childKeyMap.get(33);
+//        System.out.println("first value from child key map " + charCon.rendering);
         try {
             //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
             //UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
