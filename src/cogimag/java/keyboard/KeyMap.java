@@ -20,12 +20,25 @@ import java.util.HashMap;
 import java.awt.event.KeyEvent;
 
 /**
+ * Contains a single object, a HashMap that simplifies programmed typing of letters 
+ * in any editable text input field on the client's screen.
  * Credit for static initializer technique to SO 6802483 and 26999663. 
  * @author Michal G. <Michal.G at cogitatummagnumtelae.com>
  */
 public class KeyMap {    
+    /**
+     * A map of all the ASCII printable characters. Key is the ASCII code for the character.
+     * Value is a CharConstruction object containing the details of that character's 
+     * construction--its text representation, the base key used to type it and a flag
+     * if Shift must be pressed in conjunction.
+     */
     public static final HashMap<Integer, CharConstruction> CHAR_MAP = MakeMap();
     
+    /**
+     * Loaded manually using the MapGenerator tool.
+     * @return CHAR_MAP
+     * @see #CHAR_MAP
+     */
     public static HashMap MakeMap() {
 //        System.out.println("parent static method");        
         HashMap<Integer, CharConstruction> map = new HashMap<>();
