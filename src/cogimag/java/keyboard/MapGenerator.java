@@ -41,7 +41,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  * Main method to be run during application development. <br>
- * This class automates the process of creating a HashMap for use by Robot or manually triggered KeyEvent.
+ * Automates the process of creating a HashMap for use by Robot or manually triggered KeyEvent.
  * The class provides a simple window with a text input box and a text output box. The user will 
  * type one character from the keyboard into the text input  box. The keyPressed event captures the 
  * java.awt.event.KeyEvent.VK_ code as an integer and checks the status of the shift key (is this character 
@@ -69,7 +69,7 @@ public class MapGenerator extends JFrame implements KeyListener, ActionListener 
     private JButton btnClear;
     private static final String BTN_CLEAR_TEXT = "Clear contents";
     private JButton btnCopy;    
-    private static final String BTN_COPY_TEXT = "Copy to clipboard";
+    private static final String BTN_COPY_TEXT = "Copy output to clipboard";
 //    private static final String NEWLINE = System.getProperty("line.separator");    
     private String displayedChar;
     private int vkNumber;
@@ -125,7 +125,6 @@ public class MapGenerator extends JFrame implements KeyListener, ActionListener 
         frame.pack();
         frame.setVisible(true);
     }
-    
     private MapGenerator(String app_title) {
         super(app_title);        
     }
