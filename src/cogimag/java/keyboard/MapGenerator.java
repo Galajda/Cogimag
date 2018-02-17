@@ -81,14 +81,10 @@ public class MapGenerator extends JFrame implements KeyListener, ActionListener 
     
     public static void main(String[] args) {
         //demonstration of static method hiding
-//        HashMap<Integer, CharConstruction> parentKeyMap =KeyMap.MakeMap();
-//        System.out.println("parent key map size " + parentKeyMap.size());
-//        CharConstruction parentCharCon = parentKeyMap.get(33);
-//        System.out.println("first value from parent key map " + parentCharCon.rendering);
-//        HashMap<Integer, CharConstruction> childKeyMap =sample_extended_key_map.MakeMap();
-//        System.out.println("child key map size " + childKeyMap.size());
-//        CharConstruction charCon = childKeyMap.get(33);
-//        System.out.println("first value from child key map " + charCon.rendering);
+        System.out.println("parent key map size " + KeyMap.CHAR_MAP.size());
+        System.out.println("first value from parent key map " + KeyMap.CHAR_MAP.get(33).rendering);
+        System.out.println("child key map size " + sample_extended_key_map.CHAR_MAP.size());
+        System.out.println("first value from child key map " + sample_extended_key_map.CHAR_MAP.get(33).rendering);
         try {
             //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
             //UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
@@ -122,7 +118,7 @@ public class MapGenerator extends JFrame implements KeyListener, ActionListener 
      */
     private static void createAndShowGUI() {
         //Create and set up the window.
-        MapGenerator frame = new MapGenerator("KeyEvent Demonstration");
+        MapGenerator frame = new MapGenerator("KeyEvent Mapper");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         //Set up the content pane.

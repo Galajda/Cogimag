@@ -24,7 +24,7 @@ import java.awt.event.KeyEvent;
  * @author Michal G. <Michal.G at cogitatummagnumtelae.com>
  */
 public class KeyMap {    
-    public static final HashMap<Integer, CharConstruction> charMap = MakeMap();
+    public static final HashMap<Integer, CharConstruction> CHAR_MAP = MakeMap();
     
     public static HashMap MakeMap() {
 //        System.out.println("parent static method");        
