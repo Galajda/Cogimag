@@ -72,6 +72,23 @@ public class RoboSteno {
     private static CharConstruction getCharCon(int ascii_code) {
         return KeyMap.CHAR_MAP.get(ascii_code);
     }
+    public void testAccent() {
+        if (isRobotOnline) {            
+            
+            r.keyPress(KeyEvent.VK_ALT);
+            r.keyPress(KeyEvent.VK_0);
+            r.keyRelease(KeyEvent.VK_0);
+            r.keyPress(KeyEvent.VK_2);
+            r.keyRelease(KeyEvent.VK_2);
+            r.keyPress(KeyEvent.VK_3);
+            r.keyRelease(KeyEvent.VK_3);
+            r.keyPress(KeyEvent.VK_3);
+            r.keyRelease(KeyEvent.VK_3);
+            r.keyRelease(KeyEvent.VK_ALT);
+            
+            r.delay(1000);
+        }        
+    }
 //    private static int getVkCode(char c) {
 ////        KeyMap.CHAR_MAP.get(c);
 //        CharConstruction charCon = KeyMap.CHAR_MAP.get(Character.toString(c).codePointAt(0));
