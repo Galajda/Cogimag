@@ -136,6 +136,10 @@ public class KeyMap {
         map.put(62, new CharConstruction(">", KeyEvent.VK_PERIOD, true));
         map.put(63, new CharConstruction("?", KeyEvent.VK_SLASH, true));
         
+        //map generator produces this for alt-0233. map tester says it fails
+//        map.put(233, new CharConstruction("é", KeyEvent.VK_NUMPAD3, false));
+
+        
         return map;
     }
 }
