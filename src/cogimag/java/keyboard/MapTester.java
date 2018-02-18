@@ -6,7 +6,7 @@
 package cogimag.java.keyboard;
 
 import java.awt.event.KeyEvent;
-import java.lang.reflect.Field;
+//import java.lang.reflect.Field;
 //import java.lang.reflect.Modifier;
 //import java.awt.Robot;
 //import java.awt.AWTException;
@@ -18,26 +18,32 @@ import java.awt.event.KeyListener;
 
 //import java.util.ArrayList;
 //import java.util.HashMap;
-import javafx.scene.input.KeyCode;
+//import javafx.scene.input.KeyCode;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+//import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 /**
  *
+ * Known issues: Does not work with Caps Lock.
  * @author MichalG HP Envy
  */
 public class MapTester extends JFrame implements KeyListener, ActionListener {
     //alternative: make components final. declare them in constructor. assign listener in the runnable
+    private JSplitPane paneTxtFieldContainer;
     private JTextField txtInput;
-//    private JScrollPane paneOutputContainer;
-    private JTextArea txtOutput;    
-    private JSplitPane paneButtonContainer;
+    private JTextField txtOutput;    
     
+    private JScrollPane paneOutputContainer;    
+    private JTextArea txtTestResults;
+    
+    private JSplitPane paneButtonContainer;    
     private JButton btnSubmit;    
     private static final String BTN_SUBMIT_TEXT = "Submit char to typist";
     private JButton btnClear;
@@ -79,6 +85,12 @@ public class MapTester extends JFrame implements KeyListener, ActionListener {
                 createAndShowGUI();
             }
         });       
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                
+            }
+        });
     }
     
     
@@ -90,7 +102,6 @@ public class MapTester extends JFrame implements KeyListener, ActionListener {
     private static void createAndShowGUI() {
         //Create and set up the window.
         MapTester frame = new MapTester("KeyEvent Map Tester");
-        
         
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
@@ -105,36 +116,41 @@ public class MapTester extends JFrame implements KeyListener, ActionListener {
     
     private MapTester(String app_title) {
         super(app_title);
-        typist = new RoboSteno();
-        
+        typist = new RoboSteno();        
     }
     
-    
     private void addComponentsToPane() {        
-        txtInput = new JTextField(20);
-        
-//        txtInput.addActionListener(this);
+        txtInput = new JTextField(200);
+        txtInput.setMinimumSize(new Dimension(150,20));
         txtInput.addKeyListener(this);
-        getContentPane().add(txtInput, BorderLayout.PAGE_START);
+        txtOutput = new JTextField(20);
+        txtOutput.addKeyListener(this);
+        paneTxtFieldContainer = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, txtInput, txtOutput);
+        paneTxtFieldContainer.setDividerLocation((double)0.5);
+        getContentPane().add(paneTxtFieldContainer, BorderLayout.PAGE_START);
         
-        txtOutput = new JTextArea();
-        txtOutput.setMinimumSize(new Dimension(200,300));
+//        txtOutput = new JTextArea();
+//        txtOutput.setMinimumSize(new Dimension(200,300));
 //        txtOutput.setEditable(false);
-//        paneOutputContainer = new JScrollPane(txtOutput);
+
+        
 //        paneOutputContainer = new JScrollPane();
 //        paneOutputContainer.setPreferredSize(new Dimension(500,600));
 //        paneOutputContainer.add(txtOutput);
 //        paneOutputContainer.revalidate();
-        getContentPane().add(txtOutput, BorderLayout.CENTER);
+        txtTestResults = new JTextArea("Test results\n");
+        txtTestResults.setEditable(false);
+        paneOutputContainer = new JScrollPane(txtTestResults);
+        paneOutputContainer.setPreferredSize(new Dimension(500,600));
+//        paneOutputContainer.add(lblTestResults);
+        getContentPane().add(paneOutputContainer, BorderLayout.CENTER);
         
-        this.btnSubmit = new JButton(MapTester.BTN_SUBMIT_TEXT);
-        this.btnSubmit.addActionListener(this);
-        
+        btnSubmit = new JButton(MapTester.BTN_SUBMIT_TEXT);
+        btnSubmit.addActionListener(this);        
         btnClear = new JButton(MapTester.BTN_CLEAR_TEXT);
         btnClear.addActionListener(this);       
-//        this.btnCopy = new JButton(MapGenerator.BTN_COPY_TEXT);
-//        btnCopy.addActionListener(this);
-        paneButtonContainer = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,btnSubmit, btnClear);
+        paneButtonContainer = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, btnSubmit, btnClear);
+        paneButtonContainer.setDividerLocation((double)0.5);
         getContentPane().add(paneButtonContainer, BorderLayout.PAGE_END);
     }
     
@@ -152,7 +168,7 @@ public class MapTester extends JFrame implements KeyListener, ActionListener {
     @Override
     public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-            this.echoChar();
+            echoChar();
         }
     }
 
@@ -166,40 +182,42 @@ public class MapTester extends JFrame implements KeyListener, ActionListener {
 //                System.out.println("btnClear click");                
                 txtOutput.setText("");
                 txtInput.setText("");
+                txtInput.requestFocusInWindow();
                 break;
             case MapTester.BTN_SUBMIT_TEXT:
-                this.echoChar();
+                echoChar();
                 break;
             default:                
         }
         
-//        txtInput.requestFocusInWindow();
-        
-        
     }
     private void echoChar() {    
-        System.out.println("input text:" + txtInput.getText());
-        txtOutput.append(NEWLINE + "you typed " + txtInput.getText() + " the robot types " );
+//        System.out.println("input text:" + txtInput.getText());
+//        txtOutput.append(NEWLINE + "you typed " + txtInput.getText() + " the robot types " );
         txtOutput.requestFocusInWindow();
-        txtOutput.setCaretPosition(txtOutput.getDocument().getLength());
+//        typist.testAccent();
+//        txtOutput.setCaretPosition(txtOutput.getDocument().getLength());
         typist.type((char)txtInput.getText().codePointAt(0));
-        txtOutput.append(NEWLINE);   
-        txtInput.setText("");
+        
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
+                String inputChar = txtInput.getText().substring(0, 1);
+                //output box may be empty if the typist is slow
+                if (txtOutput.getText().length() > 0) {
+                    String robotOutput = txtOutput.getText().substring(txtOutput.getText().length()-1);
+
+    //                System.out.println("output window last char\t" + lastChar);                
+                    String testResult = "you typed " + inputChar + ". robot typed " + robotOutput + ". do they match? " + inputChar.equals(robotOutput);
+    //                System.out.println(testResult);    
+                    txtTestResults.append(testResult + "\n");
+                }
                 txtInput.requestFocusInWindow();
+                txtInput.setText("");
+                txtOutput.setText("");
             }
         });       
 
     }
-    
-    
-    
-    
-    
-    
-    
-    
     
 }
