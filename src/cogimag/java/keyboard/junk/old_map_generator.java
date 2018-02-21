@@ -6,7 +6,7 @@
 package cogimag.java.keyboard.junk;
 
 import cogimag.java.keyboard.CharConstruction;
-import cogimag.java.keyboard.MapGenerator;
+import cogimag.java.keyboard.development.MapGenerator;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;

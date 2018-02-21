@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */ 
 
-package cogimag.java.keyboard;
+package cogimag.java.keyboard.development;
 
 /*
 * KeyEventDemo

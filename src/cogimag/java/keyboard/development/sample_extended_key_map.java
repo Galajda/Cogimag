@@ -14,8 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cogimag.java.keyboard;
+package cogimag.java.keyboard.development;
 
+import cogimag.java.keyboard.CharConstruction;
+import cogimag.java.keyboard.KeyMap;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
 

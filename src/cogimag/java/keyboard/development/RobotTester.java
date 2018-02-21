@@ -1,10 +1,24 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) 2018 Michal G. <Michal.G at cogitatummagnumtelae.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package cogimag.java.keyboard;
+package cogimag.java.keyboard.development;
 
+import cogimag.java.keyboard.RoboSteno;
+import java.util.List;
+import java.util.ArrayList;
 import java.awt.event.KeyEvent;
 //import java.lang.reflect.Field;
 //import java.lang.reflect.Modifier;
@@ -12,6 +26,7 @@ import java.awt.event.KeyEvent;
 //import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
@@ -26,7 +41,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 //import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+//import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 /**
@@ -34,7 +49,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  * Known issues: Does not work with Caps Lock.
  * @author MichalG HP Envy
  */
-public class MapTester extends JFrame implements KeyListener, ActionListener {
+public class RobotTester extends JFrame implements KeyListener, ActionListener {
     //alternative: make components final. declare them in constructor. assign listener in the runnable
     private JSplitPane paneTxtFieldContainer;
     private JTextField txtInput;
@@ -101,7 +116,7 @@ public class MapTester extends JFrame implements KeyListener, ActionListener {
      */
     private static void createAndShowGUI() {
         //Create and set up the window.
-        MapTester frame = new MapTester("KeyEvent Map Tester");
+        RobotTester frame = new RobotTester("KeyEvent Map Tester");
         
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
@@ -114,7 +129,7 @@ public class MapTester extends JFrame implements KeyListener, ActionListener {
         frame.setVisible(true);
     }
     
-    private MapTester(String app_title) {
+    private RobotTester(String app_title) {
         super(app_title);
         typist = new RoboSteno();        
     }
@@ -145,9 +160,9 @@ public class MapTester extends JFrame implements KeyListener, ActionListener {
 //        paneOutputContainer.add(lblTestResults);
         getContentPane().add(paneOutputContainer, BorderLayout.CENTER);
         
-        btnSubmit = new JButton(MapTester.BTN_SUBMIT_TEXT);
+        btnSubmit = new JButton(RobotTester.BTN_SUBMIT_TEXT);
         btnSubmit.addActionListener(this);        
-        btnClear = new JButton(MapTester.BTN_CLEAR_TEXT);
+        btnClear = new JButton(RobotTester.BTN_CLEAR_TEXT);
         btnClear.addActionListener(this);       
         paneButtonContainer = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, btnSubmit, btnClear);
         paneButtonContainer.setDividerLocation((double)0.5);
@@ -178,13 +193,13 @@ public class MapTester extends JFrame implements KeyListener, ActionListener {
 //        System.out.println("button text " + btn.getText());
         
         switch (btn.getText()) {
-            case MapTester.BTN_CLEAR_TEXT:                
+            case RobotTester.BTN_CLEAR_TEXT:                
 //                System.out.println("btnClear click");                
                 txtOutput.setText("");
                 txtInput.setText("");
                 txtInput.requestFocusInWindow();
                 break;
-            case MapTester.BTN_SUBMIT_TEXT:
+            case RobotTester.BTN_SUBMIT_TEXT:
                 echoChar();
                 break;
             default:                
@@ -219,5 +234,6 @@ public class MapTester extends JFrame implements KeyListener, ActionListener {
         });       
 
     }
+    
     
 }
