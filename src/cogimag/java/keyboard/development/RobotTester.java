@@ -30,25 +30,22 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
-
-//import java.util.ArrayList;
-//import java.util.HashMap;
-//import javafx.scene.input.KeyCode;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-//import javax.swing.JLabel;
-//import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 /**
  * Tests the KeyMap by looking up in the HashMap a character that the user types
  * into the input box and repeating this character to the output box through 
- * java.awt.Robot.
- * Known issues: Does not work with Caps Lock.
+ * java.awt.Robot. <br>
+ * Known issue: Does not work with Caps Lock. <br>
+ * Known issue: main() throws StringIndexOutOfBoundsException if user presses Enter
+ * when the input box is empty. There is no plan to fix this. The class is intended
+ * for development use only.
  * @author MichalG HP Envy
  */
 public class RobotTester extends JFrame implements KeyListener, ActionListener {
@@ -66,15 +63,7 @@ public class RobotTester extends JFrame implements KeyListener, ActionListener {
     private JButton btnClear;
     private static final String BTN_CLEAR_TEXT = "Clear text";
     
-//    private static final String NEWLINE = System.getProperty("line.separator");    
-//    private String displayedChar;
-//    private int vkNumber;
-//    private boolean isShifted;
-//    private CharConstruction charCon;
-    private int asciiNumber;
     private RoboSteno typist;
-    static final String NEWLINE = System.getProperty("line.separator");
-    
     
     public static void main(String[] args) {
         
@@ -101,15 +90,8 @@ public class RobotTester extends JFrame implements KeyListener, ActionListener {
             public void run() {
                 createAndShowGUI();
             }
-        });       
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                
-            }
-        });
+        });     
     }
-    
     
     /**
      * Create the GUI and show it.  For thread safety,
@@ -146,20 +128,10 @@ public class RobotTester extends JFrame implements KeyListener, ActionListener {
         paneTxtFieldContainer.setDividerLocation((double)0.5);
         getContentPane().add(paneTxtFieldContainer, BorderLayout.PAGE_START);
         
-//        txtOutput = new JTextArea();
-//        txtOutput.setMinimumSize(new Dimension(200,300));
-//        txtOutput.setEditable(false);
-
-        
-//        paneOutputContainer = new JScrollPane();
-//        paneOutputContainer.setPreferredSize(new Dimension(500,600));
-//        paneOutputContainer.add(txtOutput);
-//        paneOutputContainer.revalidate();
         txtTestResults = new JTextArea("Test results\n");
         txtTestResults.setEditable(false);
         paneOutputContainer = new JScrollPane(txtTestResults);
         paneOutputContainer.setPreferredSize(new Dimension(500,600));
-//        paneOutputContainer.add(lblTestResults);
         getContentPane().add(paneOutputContainer, BorderLayout.CENTER);
         
         btnSubmit = new JButton(RobotTester.BTN_SUBMIT_TEXT);
@@ -173,8 +145,9 @@ public class RobotTester extends JFrame implements KeyListener, ActionListener {
     
     @Override
     public void keyTyped(KeyEvent e) {
-        asciiNumber = Character.toString(e.getKeyChar()).codePointAt(0);
-        
+//        System.out.print("key typed event.");
+//        asciiNumber = Character.toString(e.getKeyChar()).codePointAt(0);
+//        System.out.println(" ascii number=" + Character.toString(e.getKeyChar()).codePointAt(0));
     }
 
     @Override
@@ -225,7 +198,8 @@ public class RobotTester extends JFrame implements KeyListener, ActionListener {
                     String robotOutput = txtOutput.getText().substring(txtOutput.getText().length()-1);
 
     //                System.out.println("output window last char\t" + lastChar);                
-                    String testResult = "you typed " + inputChar + ". robot typed " + robotOutput + ". do they match? " + inputChar.equals(robotOutput);
+                    String testResult = "you typed " + inputChar + ". robot typed " + 
+                            robotOutput + ". do they match? " + inputChar.equals(robotOutput);
     //                System.out.println(testResult);    
                     txtTestResults.append(testResult + "\n");
                 }
