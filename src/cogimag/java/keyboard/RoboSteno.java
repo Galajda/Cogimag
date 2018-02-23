@@ -66,13 +66,6 @@ public class RoboSteno {
 //        return true;
     }
     
-//    private static CharConstruction getCharCon(char c) {
-//        return KeyMap_EN_US.EN_US.get(Character.toString(c).codePointAt(0));
-//    }
-    
-//    private static CharConstruction getCharCon(int ascii_code) {
-//        return KeyMap_EN_US.EN_US.get(ascii_code);
-//    }
     public void testAccent() {
         if (isRobotOnline) {            
             
