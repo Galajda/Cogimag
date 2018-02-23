@@ -45,7 +45,9 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 /**
- *
+ * Tests the KeyMap by looking up in the HashMap a character that the user types
+ * into the input box and repeating this character to the output box through 
+ * java.awt.Robot.
  * Known issues: Does not work with Caps Lock.
  * @author MichalG HP Envy
  */
@@ -116,7 +118,7 @@ public class RobotTester extends JFrame implements KeyListener, ActionListener {
      */
     private static void createAndShowGUI() {
         //Create and set up the window.
-        RobotTester frame = new RobotTester("KeyEvent Map Tester");
+        RobotTester frame = new RobotTester("Robot Map Tester");
         
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
