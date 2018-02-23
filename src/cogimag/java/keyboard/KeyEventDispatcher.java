@@ -57,7 +57,7 @@ public class KeyEventDispatcher {
                     @Override
                     public void run() {
                         System.out.println("invoke and wait");
-                        
+                        fireEvent(ascii_number);
                     }
                             
                         }
