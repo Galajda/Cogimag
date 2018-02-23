@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -51,7 +52,7 @@ public class RoboSteno {
     }
     
     public void type(char c) {
-        type(getCharCon(c));
+        type(KeyMap_EN_US.getCharCon(c));
 //        return true;
     }
 //    public static void type(int ascii) {
@@ -60,18 +61,18 @@ public class RoboSteno {
     public void type(String s) {
         char[] charArray = s.toCharArray();
         for (char c : charArray) {
-            type(getCharCon(c));
+            type(KeyMap_EN_US.getCharCon(c));
         }
 //        return true;
     }
     
-    private static CharConstruction getCharCon(char c) {
-        return KeyMap.CHAR_MAP.get(Character.toString(c).codePointAt(0));
-    }
+//    private static CharConstruction getCharCon(char c) {
+//        return KeyMap_EN_US.EN_US.get(Character.toString(c).codePointAt(0));
+//    }
     
-    private static CharConstruction getCharCon(int ascii_code) {
-        return KeyMap.CHAR_MAP.get(ascii_code);
-    }
+//    private static CharConstruction getCharCon(int ascii_code) {
+//        return KeyMap_EN_US.EN_US.get(ascii_code);
+//    }
     public void testAccent() {
         if (isRobotOnline) {            
             
@@ -90,13 +91,13 @@ public class RoboSteno {
         }        
     }
 //    private static int getVkCode(char c) {
-////        KeyMap.CHAR_MAP.get(c);
-//        CharConstruction charCon = KeyMap.CHAR_MAP.get(Character.toString(c).codePointAt(0));
+////        KeyMap_EN_US.EN_US.get(c);
+//        CharConstruction charCon = KeyMap_EN_US.EN_US.get(Character.toString(c).codePointAt(0));
 //        return charCon.keyEventConstant;
 //    }
     
 //    private static int getVkCode(int ascii_code) {
-//        CharConstruction charCon = KeyMap.CHAR_MAP.get(ascii_code);
+//        CharConstruction charCon = KeyMap_EN_US.EN_US.get(ascii_code);
 //        return charCon.keyEventConstant;
 //    }
     
