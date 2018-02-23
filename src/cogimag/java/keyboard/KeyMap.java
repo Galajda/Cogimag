@@ -21,11 +21,14 @@ import java.awt.event.KeyEvent;
 
 /**
  * Contains a single object, a HashMap that simplifies programmed typing of letters 
- * in any editable text input field on the client's screen.
+ * in any editable text input field on the client's screen. This class contains the 
+ * mapping for the US-English keyboard. The class may be extended for other
+ * keyboards. 
+ * @see cogimag.java.keyboard.development.sample_extended_key_map
  * Credit for static initializer technique to SO 6802483 and 26999663. 
  * @author Michal G. <Michal.G at cogitatummagnumtelae.com>
  */
-public class KeyMap_EN_US {    
+public class KeyMap {    
     /**
      * A map of all the ASCII printable characters. Key is the ASCII code for the character.
      * Value is a CharConstruction object containing the details of that character's 
@@ -35,7 +38,7 @@ public class KeyMap_EN_US {
     public static final HashMap<Integer, CharConstruction> KEY_MAP = makeMap();
     
     /**
-     * Loaded manually using the MapGenerator tool.
+     * Put statements must be copied manually using the MapGenerator tool.
      * @return KEY_MAP
      * @see #KEY_MAP
      */
@@ -145,10 +148,10 @@ public class KeyMap_EN_US {
     
     
     public static CharConstruction getCharCon(char c) {
-        return KeyMap_EN_US.KEY_MAP.get(Character.toString(c).codePointAt(0));
+        return KeyMap.KEY_MAP.get(Character.toString(c).codePointAt(0));
     }
     
     public static CharConstruction getCharCon(int ascii_code) {
-        return KeyMap_EN_US.KEY_MAP.get(ascii_code);
+        return KeyMap.KEY_MAP.get(ascii_code);
     }
 }
