@@ -17,7 +17,7 @@
 package cogimag.java.keyboard.development;
 
 import cogimag.java.keyboard.CharConstruction;
-import cogimag.java.keyboard.KeyMap_EN_US;
+import cogimag.java.keyboard.KeyMap;
 import java.awt.event.KeyEvent;
 import java.lang.reflect.Field;
 //import java.lang.reflect.Modifier;
@@ -49,10 +49,10 @@ import javax.swing.UnsupportedLookAndFeelException;
  java.awt.event.KeyEvent.VK_ code as an integer and checks the status of the shift key (is this character 
  on the first level of the keyboard, or must the user press shift to obtain it, as for upper-case letters?).
  The keyTyped event captures the ASCII number of the displayed character and its String representation.
- With these four parameters, an entry in the KeyMap_EN_US HashMap can be constructed. For readability, the VK_
+ With these four parameters, an entry in the KeyMap HashMap can be constructed. For readability, the VK_
  integer is converted into its class name, e.g., KeyEvent.VK_A. The developer may press every printable
- character on the local keyboard, obtaining a complete list of the KeyMap_EN_US entries needed to read and type 
- the characters on the client's keyboard. The built-in KeyMap_EN_US class contains such a list for the US-English
+ character on the local keyboard, obtaining a complete list of the KeyMap entries needed to read and type 
+ the characters on the client's keyboard. The built-in KeyMap class contains such a list for the US-English
  QWERTY keyboard. If the client uses a different keyboard, the developer may extend the built-in class
  and hide the MakeMap() method with a new method containing the client's keyboard map.
  <br><br>
@@ -80,8 +80,8 @@ public class MapGenerator extends JFrame implements KeyListener, ActionListener 
     
     public static void main(String[] args) {
         //demonstration of static method hiding
-        System.out.println("parent key map size " + KeyMap_EN_US.KEY_MAP.size());
-        System.out.println("first value from parent key map " + KeyMap_EN_US.KEY_MAP.get(33).rendering);
+        System.out.println("parent key map size " + KeyMap.KEY_MAP.size());
+        System.out.println("first value from parent key map " + KeyMap.KEY_MAP.get(33).rendering);
         System.out.println("child key map size " + sample_extended_key_map.CHAR_MAP.size());
         System.out.println("first value from child key map " + sample_extended_key_map.CHAR_MAP.get(33).rendering);
         try {

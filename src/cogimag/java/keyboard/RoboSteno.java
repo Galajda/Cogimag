@@ -52,7 +52,7 @@ public class RoboSteno {
     }
     
     public void type(char c) {
-        type(KeyMap_EN_US.getCharCon(c));
+        type(KeyMap.getCharCon(c));
 //        return true;
     }
 //    public static void type(int ascii) {
@@ -61,7 +61,7 @@ public class RoboSteno {
     public void type(String s) {
         char[] charArray = s.toCharArray();
         for (char c : charArray) {
-            type(KeyMap_EN_US.getCharCon(c));
+            type(KeyMap.getCharCon(c));
         }
 //        return true;
     }
@@ -84,13 +84,13 @@ public class RoboSteno {
         }        
     }
 //    private static int getVkCode(char c) {
-////        KeyMap_EN_US.EN_US.get(c);
-//        CharConstruction charCon = KeyMap_EN_US.EN_US.get(Character.toString(c).codePointAt(0));
+////        KeyMap.EN_US.get(c);
+//        CharConstruction charCon = KeyMap.EN_US.get(Character.toString(c).codePointAt(0));
 //        return charCon.keyEventConstant;
 //    }
     
 //    private static int getVkCode(int ascii_code) {
-//        CharConstruction charCon = KeyMap_EN_US.EN_US.get(ascii_code);
+//        CharConstruction charCon = KeyMap.EN_US.get(ascii_code);
 //        return charCon.keyEventConstant;
 //    }
     

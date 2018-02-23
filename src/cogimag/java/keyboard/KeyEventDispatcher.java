@@ -30,7 +30,7 @@ import javax.swing.SwingUtilities;
 public class KeyEventDispatcher {
     public static void fireEvent(int ascii_number) {
         System.out.println("firing key event");
-        CharConstruction charCon = KeyMap_EN_US.getCharCon(ascii_number);
+        CharConstruction charCon = KeyMap.getCharCon(ascii_number);
         if (EventQueue.isDispatchThread()) {
             System.out.println("on dispatch thread");    
             List<KeyEvent> events = new ArrayList<>();
