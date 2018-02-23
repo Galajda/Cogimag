@@ -16,17 +16,14 @@
  */
 package cogimag.java.keyboard.development;
 
-//import cogimag.java.keyboard.RoboSteno;
+
 import cogimag.java.keyboard.KeyEventDispatcher;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -40,7 +37,9 @@ import javax.swing.UnsupportedLookAndFeelException;
  * Tests the KeyMap by looking up in the HashMap a character that the user types
  * into the input box and repeating this character to the output box through 
  * java.awt.event.KeyEvent.
- * 
+ * Known issue: main() throws StringIndexOutOfBoundsException if user presses Enter
+ * when the input box is empty. There is no plan to fix this. The class is intended
+ * for development use only.
  * @author MichalG HP Envy
  */
 public class KeyEventTester extends JFrame implements KeyListener, ActionListener {
@@ -57,14 +56,7 @@ public class KeyEventTester extends JFrame implements KeyListener, ActionListene
     private JButton btnClear;
     private static final String BTN_CLEAR_TEXT = "Clear text";
     
-//    private static final String NEWLINE = System.getProperty("line.separator");    
-//    private String displayedChar;
-//    private int vkNumber;
-//    private boolean isShifted;
-//    private CharConstruction charCon;
-    private int asciiNumber;
-//    private RoboSteno typist;
-    static final String NEWLINE = System.getProperty("line.separator");
+    private static final String NEWLINE = System.getProperty("line.separator");
     
     
     public static void main(String[] args) {
@@ -101,7 +93,6 @@ public class KeyEventTester extends JFrame implements KeyListener, ActionListene
         });
     }
     
-    
     /**
      * Create the GUI and show it.  For thread safety,
      * this method should be invoked from the
@@ -137,15 +128,6 @@ public class KeyEventTester extends JFrame implements KeyListener, ActionListene
         paneTxtFieldContainer.setDividerLocation((double)0.5);
         getContentPane().add(paneTxtFieldContainer, BorderLayout.PAGE_START);
         
-//        txtOutput = new JTextArea();
-//        txtOutput.setMinimumSize(new Dimension(200,300));
-//        txtOutput.setEditable(false);
-
-        
-//        paneOutputContainer = new JScrollPane();
-//        paneOutputContainer.setPreferredSize(new Dimension(500,600));
-//        paneOutputContainer.add(txtOutput);
-//        paneOutputContainer.revalidate();
         txtTestResults = new JTextArea("Test results\n");
         txtTestResults.setEditable(false);
         paneOutputContainer = new JScrollPane(txtTestResults);
@@ -164,9 +146,10 @@ public class KeyEventTester extends JFrame implements KeyListener, ActionListene
     
     @Override
     public void keyTyped(KeyEvent e) {
-        System.out.println("key typed event. key char" + e.getKeyChar());
-        asciiNumber = e.getKeyChar() + 0;
-        
+//        System.out.println("key typed event. key char" + e.getKeyChar());
+//        asciiNumber = e.getKeyChar() + 0;
+//        asciiNumber = Character.toString(e.getKeyChar()).codePointAt(0);
+//        System.out.println("ascii number=" + Character.toString(e.getKeyChar()).codePointAt(0));
     }
 
     @Override
@@ -194,16 +177,36 @@ public class KeyEventTester extends JFrame implements KeyListener, ActionListene
                 txtInput.requestFocusInWindow();
                 break;
             case KeyEventTester.BTN_SUBMIT_TEXT:
-                txtOutput.requestFocusInWindow();
+                
                 dispatchKeyEvent();
                 break;
             default:                
-        }
-        
+        }        
     }
     
     private void dispatchKeyEvent() {
-        System.out.println("dispatching key event for ascii number " + asciiNumber);
-        KeyEventDispatcher.fireEvent(asciiNumber);
+        System.out.println("dispatching key event for ascii number " + txtInput.getText().codePointAt(0));
+        txtOutput.requestFocusInWindow();
+        KeyEventDispatcher.fireEvent(txtInput.getText().codePointAt(0));
+        
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                String inputChar = txtInput.getText().substring(0, 1);
+                //output box may be empty if the typist is slow
+                if (txtOutput.getText().length() > 0) {
+                    String eventQueueOutput = txtOutput.getText().substring(txtOutput.getText().length()-1);
+
+    //                System.out.println("output window last char\t" + lastChar);                
+                    String testResult = "you typed " + inputChar + ". event dispatcher posted " + 
+                            eventQueueOutput + ". do they match? " + inputChar.equals(eventQueueOutput);
+    //                System.out.println(testResult);    
+                    txtTestResults.append(testResult + "\n");
+                }
+                txtInput.requestFocusInWindow();
+                txtInput.setText("");
+                txtOutput.setText("");
+            }
+        });               
     }
 }
