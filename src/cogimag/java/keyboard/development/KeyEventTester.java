@@ -17,6 +17,7 @@
 package cogimag.java.keyboard.development;
 
 //import cogimag.java.keyboard.RoboSteno;
+import cogimag.java.keyboard.KeyEventDispatcher;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -36,11 +37,14 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 /**
- *
+ * Tests the KeyMap by looking up in the HashMap a character that the user types
+ * into the input box and repeating this character to the output box through 
+ * java.awt.event.KeyEvent.
+ * 
  * @author MichalG HP Envy
  */
 public class KeyEventTester extends JFrame implements KeyListener, ActionListener {
-        private JSplitPane paneTxtFieldContainer;
+    private JSplitPane paneTxtFieldContainer;
     private JTextField txtInput;
     private JTextField txtOutput;    
     
@@ -49,7 +53,7 @@ public class KeyEventTester extends JFrame implements KeyListener, ActionListene
     
     private JSplitPane paneButtonContainer;    
     private JButton btnSubmit;    
-    private static final String BTN_SUBMIT_TEXT = "Submit char to typist";
+    private static final String BTN_SUBMIT_TEXT = "Submit char to event queue";
     private JButton btnClear;
     private static final String BTN_CLEAR_TEXT = "Clear text";
     
@@ -160,7 +164,8 @@ public class KeyEventTester extends JFrame implements KeyListener, ActionListene
     
     @Override
     public void keyTyped(KeyEvent e) {
-        asciiNumber = Character.toString(e.getKeyChar()).codePointAt(0);
+        System.out.println("key typed event. key char" + e.getKeyChar());
+        asciiNumber = e.getKeyChar() + 0;
         
     }
 
@@ -189,6 +194,7 @@ public class KeyEventTester extends JFrame implements KeyListener, ActionListene
                 txtInput.requestFocusInWindow();
                 break;
             case KeyEventTester.BTN_SUBMIT_TEXT:
+                txtOutput.requestFocusInWindow();
                 dispatchKeyEvent();
                 break;
             default:                
@@ -196,21 +202,8 @@ public class KeyEventTester extends JFrame implements KeyListener, ActionListene
         
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
     private void dispatchKeyEvent() {
-        if (EventQueue.isDispatchThread()) {
-            List<KeyEvent> events = new ArrayList<>();
-            List<Integer> modifiers = new ArrayList<>();
-            
-            
-        }
+        System.out.println("dispatching key event for ascii number " + asciiNumber);
+        KeyEventDispatcher.fireEvent(asciiNumber);
     }
 }
