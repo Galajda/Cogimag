@@ -18,6 +18,7 @@ package cogimag.java.keyboard.development;
 
 
 import cogimag.java.keyboard.KeyEventDispatcher;
+import cogimag.java.keyboard.KeyMap;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -187,7 +188,7 @@ public class KeyEventTester extends JFrame implements KeyListener, ActionListene
     private void dispatchKeyEvent() {
         System.out.println("dispatching key event for ascii number " + txtInput.getText().codePointAt(0));
         txtOutput.requestFocusInWindow();
-        KeyEventDispatcher.fireEvent(txtInput.getText().codePointAt(0));
+        KeyEventDispatcher.fireEvent(new KeyMap(), txtInput.getText().codePointAt(0));
         
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             @Override

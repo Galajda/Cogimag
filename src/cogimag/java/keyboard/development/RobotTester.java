@@ -17,13 +17,8 @@
 package cogimag.java.keyboard.development;
 
 import cogimag.java.keyboard.RoboSteno;
-import java.util.List;
-import java.util.ArrayList;
+import cogimag.java.keyboard.KeyMap;
 import java.awt.event.KeyEvent;
-//import java.lang.reflect.Field;
-//import java.lang.reflect.Modifier;
-//import java.awt.Robot;
-//import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -115,7 +110,7 @@ public class RobotTester extends JFrame implements KeyListener, ActionListener {
     
     private RobotTester(String app_title) {
         super(app_title);
-        typist = new RoboSteno();        
+        typist = new RoboSteno(new KeyMap());        
     }
     
     private void addComponentsToPane() {        

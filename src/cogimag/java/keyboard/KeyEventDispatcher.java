@@ -28,9 +28,9 @@ import javax.swing.SwingUtilities;
  * @author MichalG HP Envy
  */
 public class KeyEventDispatcher {
-    public static void fireEvent(int ascii_number) {
+    public static void fireEvent(KeyMap map, int ascii_number) {
         System.out.println("firing key event");
-        CharConstruction charCon = KeyMap.getCharCon(ascii_number);
+        CharConstruction charCon = map.getCharCon(ascii_number);
         if (EventQueue.isDispatchThread()) {
             System.out.println("on dispatch thread");    
             List<KeyEvent> events = new ArrayList<>();
@@ -57,7 +57,7 @@ public class KeyEventDispatcher {
                     @Override
                     public void run() {
                         System.out.println("invoke and wait");
-                        fireEvent(ascii_number);
+                        fireEvent(map, ascii_number);
                     }
                             
                         }

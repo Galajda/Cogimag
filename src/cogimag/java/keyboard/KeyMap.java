@@ -20,12 +20,12 @@ import java.util.HashMap;
 import java.awt.event.KeyEvent;
 
 /**
- * Contains a single object, a HashMap that simplifies programmed typing of letters 
+ * Contains a single object, a {@link HashMap} that simplifies programmed typing of letters 
  * in any editable text input field on the client's screen. This class contains the 
  * mapping for the US-English keyboard. The class may be extended for other
  * keyboards. 
  * @see cogimag.java.keyboard.development.sample_extended_key_map
- * Credit for static initializer technique to SO 6802483 and 26999663. 
+ 
  * @author Michal G. <Michal.G at cogitatummagnumtelae.com>
  */
 public class KeyMap {    
@@ -39,6 +39,7 @@ public class KeyMap {
     
     /**
      * Put statements must be copied manually using the MapGenerator tool.
+     * Credit for static initializer technique to SO 6802483 and 26999663. 
      * @return KEY_MAP
      * @see #KEY_MAP
      */

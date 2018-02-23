@@ -22,9 +22,10 @@ public class RoboSteno {
     
     private static Robot r;
     private static boolean isRobotOnline;    
+    private static KeyMap map;
     
-    
-    public RoboSteno() {
+    public RoboSteno(KeyMap m) {
+        map = m;
         isRobotOnline = true;
         try {
             r = new Robot();
@@ -52,7 +53,7 @@ public class RoboSteno {
     }
     
     public void type(char c) {
-        type(KeyMap.getCharCon(c));
+        type(map.getCharCon(c));
 //        return true;
     }
 //    public static void type(int ascii) {
@@ -61,7 +62,7 @@ public class RoboSteno {
     public void type(String s) {
         char[] charArray = s.toCharArray();
         for (char c : charArray) {
-            type(KeyMap.getCharCon(c));
+            type(map.getCharCon(c));
         }
 //        return true;
     }
@@ -84,13 +85,13 @@ public class RoboSteno {
         }        
     }
 //    private static int getVkCode(char c) {
-////        KeyMap.EN_US.get(c);
-//        CharConstruction charCon = KeyMap.EN_US.get(Character.toString(c).codePointAt(0));
+////        map.KEY_MAP.get(c);
+//        CharConstruction charCon = map.KEY_MAP.get(Character.toString(c).codePointAt(0));
 //        return charCon.keyEventConstant;
 //    }
     
 //    private static int getVkCode(int ascii_code) {
-//        CharConstruction charCon = KeyMap.EN_US.get(ascii_code);
+//        CharConstruction charCon = map.KEY_MAP.get(ascii_code);
 //        return charCon.keyEventConstant;
 //    }
     
