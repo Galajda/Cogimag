@@ -25,21 +25,21 @@ import java.awt.event.KeyEvent;
  * Credit for static initializer technique to SO 6802483 and 26999663. 
  * @author Michal G. <Michal.G at cogitatummagnumtelae.com>
  */
-public class KeyMap {    
+public class KeyMap_EN_US {    
     /**
      * A map of all the ASCII printable characters. Key is the ASCII code for the character.
      * Value is a CharConstruction object containing the details of that character's 
      * construction--its text representation, the base key used to type it and a flag
      * if Shift must be pressed in conjunction.
      */
-    public static final HashMap<Integer, CharConstruction> CHAR_MAP = MakeMap();
+    public static final HashMap<Integer, CharConstruction> KEY_MAP = makeMap();
     
     /**
      * Loaded manually using the MapGenerator tool.
-     * @return CHAR_MAP
-     * @see #CHAR_MAP
+     * @return KEY_MAP
+     * @see #KEY_MAP
      */
-    public static HashMap MakeMap() {
+    public static HashMap makeMap() {
 //        System.out.println("parent static method");        
         HashMap<Integer, CharConstruction> map = new HashMap<>();
         
@@ -141,5 +141,14 @@ public class KeyMap {
 
         
         return map;
+    }
+    
+    
+    public static CharConstruction getCharCon(char c) {
+        return KeyMap_EN_US.KEY_MAP.get(Character.toString(c).codePointAt(0));
+    }
+    
+    public static CharConstruction getCharCon(int ascii_code) {
+        return KeyMap_EN_US.KEY_MAP.get(ascii_code);
     }
 }
