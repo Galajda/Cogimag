@@ -4,8 +4,10 @@
 ## Description
 A Java library of utilities for the keyboard and for JavaFX dialog boxes. 
 
-The keyboard library answers the question of printing characters to the screen
-using java.awt.Robot or the EventQueue.
+The keyboard package aims to simplify the printing characters to the screen
+using java.awt.Robot or the EventQueue. It includes a HashMap of keystrokes,
+a HashMap generation tool, test windows for the maps and implementations of
+Robot and EventQueue typing utilities.
 
 The JavaFX dialog boxes are less useful in light of the dialog boxes of JavaFX 8. Please
 consider javafx.scene.control.Dialog and subclasses before using the classes in this
