@@ -5,11 +5,8 @@
         <group>
             <file>file:/C:/Users/MichalG%20HP%20Envy/Documents/NetBeansProjects/cogimag/src/cogimag/java/keyboard/KeyMap_EN_US.java</file>
             <file>file:/C:/Users/MichalG%20HP%20Envy/Documents/NetBeansProjects/cogimag/src/cogimag/java/keyboard/KeyMap.java</file>
-            <file>file:/C:/Users/MichalG%20HP%20Envy/Documents/NetBeansProjects/cogimag/src/cogimag/java/keyboard/development/MapGenerator.java</file>
-            <file>file:/C:/Users/MichalG%20HP%20Envy/Documents/NetBeansProjects/cogimag/src/cogimag/java/keyboard/development/KeyEventTester.java</file>
             <file>file:/C:/Users/MichalG%20HP%20Envy/Documents/NetBeansProjects/cogimag/src/cogimag/java/keyboard/KeyEventDispatcher.java</file>
-            <file>file:/C:/Users/MichalG%20HP%20Envy/Documents/NetBeansProjects/cogimag/src/cogimag/java/keyboard/development/SampleExtendedKeyMap.java</file>
-            <file>file:/C:/Users/MichalG%20HP%20Envy/Documents/NetBeansProjects/cogimag/src/cogimag/java/keyboard/development/RobotTester.java</file>
+            <file>file:/C:/Users/MichalG%20HP%20Envy/Documents/NetBeansProjects/cogimag/src/cogimag/java/keyboard/CharConstruction.java</file>
             <file>file:/C:/Users/MichalG%20HP%20Envy/Documents/NetBeansProjects/cogimag/src/cogimag/java/keyboard/RoboSteno.java</file>
         </group>
     </open-files>
