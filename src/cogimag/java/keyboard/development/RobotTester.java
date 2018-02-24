@@ -17,7 +17,7 @@
 package cogimag.java.keyboard.development;
 
 import cogimag.java.keyboard.RoboSteno;
-import cogimag.java.keyboard.KeyMap;
+import cogimag.java.keyboard.KeyMap_EN_US;
 import java.awt.event.KeyEvent;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -34,9 +34,9 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 /**
- * Tests the KeyMap by looking up in the HashMap a character that the user types
- * into the input box and repeating this character to the output box through 
- * java.awt.Robot. <br>
+ * Tests the KeyMap_EN_US by looking up in the HashMap a character that the user types
+ into the input box and repeating this character to the output box through 
+ java.awt.Robot. <br>
  * Known issue: Does not work with Caps Lock. <br>
  * Known issue: main() throws StringIndexOutOfBoundsException if user presses Enter
  * when the input box is empty. There is no plan to fix this. The class is intended
@@ -110,7 +110,7 @@ public class RobotTester extends JFrame implements KeyListener, ActionListener {
     
     private RobotTester(String app_title) {
         super(app_title);
-        typist = new RoboSteno(new KeyMap());        
+        typist = new RoboSteno(new KeyMap_EN_US());        
     }
     
     private void addComponentsToPane() {        

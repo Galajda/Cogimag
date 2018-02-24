@@ -18,7 +18,7 @@ package cogimag.java.keyboard.development;
 
 
 import cogimag.java.keyboard.KeyEventDispatcher;
-import cogimag.java.keyboard.KeyMap;
+import cogimag.java.keyboard.KeyMap_EN_US;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -35,9 +35,9 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 /**
- * Tests the KeyMap by looking up in the HashMap a character that the user types
- * into the input box and repeating this character to the output box through 
- * java.awt.event.KeyEvent.
+ * Tests the KeyMap_EN_US by looking up in the HashMap a character that the user types
+ into the input box and repeating this character to the output box through 
+ java.awt.event.KeyEvent.
  * Known issue: main() throws StringIndexOutOfBoundsException if user presses Enter
  * when the input box is empty. There is no plan to fix this. The class is intended
  * for development use only.
@@ -188,7 +188,7 @@ public class KeyEventTester extends JFrame implements KeyListener, ActionListene
     private void dispatchKeyEvent() {
         System.out.println("dispatching key event for ascii number " + txtInput.getText().codePointAt(0));
         txtOutput.requestFocusInWindow();
-        KeyEventDispatcher.fireEvent(new KeyMap(), txtInput.getText().codePointAt(0));
+        KeyEventDispatcher.fireEvent(new KeyMap_EN_US(), txtInput.getText().codePointAt(0));
         
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             @Override
