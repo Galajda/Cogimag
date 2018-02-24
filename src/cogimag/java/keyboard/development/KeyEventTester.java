@@ -16,15 +16,17 @@
  */
 package cogimag.java.keyboard.development;
 
-
 import cogimag.java.keyboard.KeyEventDispatcher;
 import cogimag.java.keyboard.KeyMap_EN_US;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -36,10 +38,12 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  * Tests the KeyMap_EN_US by looking up in the HashMap a character that the user types
- into the input box and repeating this character to the output box through 
- java.awt.event.KeyEvent.
+ * into the input box and repeating this character to the output box through 
+ * java.awt.event.KeyEvent. In order to adapt the tester to other key maps, alter
+ * the call to KeyEventDispatcher.fireEvent() in dispatchKeyEvent() to take 
+ * your custom key map as an argument.<br>
  * Known issue: main() throws StringIndexOutOfBoundsException if user presses Enter
- * when the input box is empty. There is no plan to fix this. The class is intended
+ * when the input box is empty. There is no plan to fix this bug. The class is intended
  * for development use only.
  * @author MichalG HP Envy
  */
@@ -57,11 +61,9 @@ public class KeyEventTester extends JFrame implements KeyListener, ActionListene
     private JButton btnClear;
     private static final String BTN_CLEAR_TEXT = "Clear text";
     
-    private static final String NEWLINE = System.getProperty("line.separator");
+//    private static final String NEWLINE = System.getProperty("line.separator");
     
-    
-    public static void main(String[] args) {
-        
+    public static void main(String[] args) {        
         try {
             //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
             //UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
@@ -84,12 +86,6 @@ public class KeyEventTester extends JFrame implements KeyListener, ActionListene
             @Override
             public void run() {
                 createAndShowGUI();
-            }
-        });       
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                
             }
         });
     }
@@ -116,7 +112,6 @@ public class KeyEventTester extends JFrame implements KeyListener, ActionListene
     
     private KeyEventTester(String app_title) {
         super(app_title);
-//        typist = new RoboSteno();        
     }
     
     private void addComponentsToPane() {        
@@ -133,7 +128,6 @@ public class KeyEventTester extends JFrame implements KeyListener, ActionListene
         txtTestResults.setEditable(false);
         paneOutputContainer = new JScrollPane(txtTestResults);
         paneOutputContainer.setPreferredSize(new Dimension(500,600));
-//        paneOutputContainer.add(lblTestResults);
         getContentPane().add(paneOutputContainer, BorderLayout.CENTER);
         
         btnSubmit = new JButton(KeyEventTester.BTN_SUBMIT_TEXT);
@@ -164,12 +158,15 @@ public class KeyEventTester extends JFrame implements KeyListener, ActionListene
             dispatchKeyEvent();
         }
     }
-
+    
+    /**
+     * Button click handler
+     * @param e 
+     */
     @Override
     public void actionPerformed(ActionEvent e) {        
         JButton btn = (JButton) e.getSource();        
-//        System.out.println("button text " + btn.getText());
-        
+//        System.out.println("button text " + btn.getText());        
         switch (btn.getText()) {
             case KeyEventTester.BTN_CLEAR_TEXT:                
 //                System.out.println("btnClear click");                
@@ -177,8 +174,7 @@ public class KeyEventTester extends JFrame implements KeyListener, ActionListene
                 txtInput.setText("");
                 txtInput.requestFocusInWindow();
                 break;
-            case KeyEventTester.BTN_SUBMIT_TEXT:
-                
+            case KeyEventTester.BTN_SUBMIT_TEXT:                
                 dispatchKeyEvent();
                 break;
             default:                
@@ -186,15 +182,16 @@ public class KeyEventTester extends JFrame implements KeyListener, ActionListene
     }
     
     private void dispatchKeyEvent() {
-        System.out.println("dispatching key event for ascii number " + txtInput.getText().codePointAt(0));
+//        System.out.println("dispatching key event for ascii number " + txtInput.getText().codePointAt(0));
         txtOutput.requestFocusInWindow();
+        //change this to suit your custom key map
         KeyEventDispatcher.fireEvent(new KeyMap_EN_US(), txtInput.getText().codePointAt(0));
         
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 String inputChar = txtInput.getText().substring(0, 1);
-                //output box may be empty if the typist is slow
+                //output box may be empty if the event is delayed
                 if (txtOutput.getText().length() > 0) {
                     String eventQueueOutput = txtOutput.getText().substring(txtOutput.getText().length()-1);
 

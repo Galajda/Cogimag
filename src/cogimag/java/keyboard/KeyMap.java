@@ -19,12 +19,20 @@ package cogimag.java.keyboard;
 import java.util.HashMap;
 
 /**
- *
+ * Base class for language-specific subclasses of the keyboard mapping. Do not
+ * use this class directly. Contains a single object, a {@link HashMap} that 
+ * simplifies programmed typing of letters in any editable text input field on 
+ * the client's screen. 
  * @author MichalG HP Envy
  */
 public abstract class KeyMap {
- 
-    public static HashMap<Integer, CharConstruction> KEY_MAP = makeMap();
+ /**
+ * A map of all the ASCII printable characters. Key is the ASCII code for the character.
+ * Value is a CharConstruction object containing the details of that character's 
+ * construction--its text representation, the base key used to type it and a flag
+ * if Shift must be pressed in conjunction.
+ */
+    public static final HashMap<Integer, CharConstruction> KEY_MAP = makeMap();
     
     public static HashMap makeMap() {
         System.out.println("parent key map static method");    
@@ -33,16 +41,13 @@ public abstract class KeyMap {
         return map;
     }
     
-    
     public CharConstruction getCharCon(char c) {
-//        return KEY_MAP.get(Character.toString(c).codePointAt(0));
+        //subclass should return KEY_MAP.get(Character.toString(c).codePointAt(0));
         throw new java.lang.NullPointerException();
-
     }
     
     public CharConstruction getCharCon(int ascii_code) {
-//        return KEY_MAP.get(ascii_code);
+        //sublclass should return KEY_MAP.get(ascii_code);
         throw new java.lang.NullPointerException();
-    }
-    
+    }    
 }

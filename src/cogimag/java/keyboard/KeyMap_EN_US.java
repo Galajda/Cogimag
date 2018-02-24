@@ -20,28 +20,18 @@ import java.util.HashMap;
 import java.awt.event.KeyEvent;
 
 /**
- * Contains a single object, a {@link HashMap} that simplifies programmed typing of letters 
- * in any editable text input field on the client's screen. This class contains the 
- * mapping for the US-English keyboard. The class may be extended for other
- * keyboards. 
- * @see cogimag.java.keyboard.development.sample_extended_key_map
- 
+ * The mapping for the US-English keyboard. 
  * @author Michal G. <Michal.G at cogitatummagnumtelae.com>
  */
 public class KeyMap_EN_US extends KeyMap {    
+    /**    
+     * Intentionally hides the HashMap of the parent class
+     */    
+    public static final HashMap<Integer, CharConstruction> KEY_MAP = makeMap();
     /**
-     * A map of all the ASCII printable characters. Key is the ASCII code for the character.
-     * Value is a CharConstruction object containing the details of that character's 
-     * construction--its text representation, the base key used to type it and a flag
-     * if Shift must be pressed in conjunction.
-     */
-//    public static final HashMap<Integer, CharConstruction> KEY_MAP = makeMap();
-    public static HashMap<Integer, CharConstruction> KEY_MAP = makeMap();
-    /**
-     * Put statements must be copied manually using the MapGenerator tool.
+     * Put statements must be pasted manually using the MapGenerator tool.
      * Credit for static initializer technique to SO 6802483 and 26999663. 
-     * @return KEY_MAP
-     * @see #KEY_MAP
+     * @return KEY_MAP     
      */
     public static HashMap makeMap() {
         System.out.println("en-us static method");        
@@ -157,5 +147,5 @@ public class KeyMap_EN_US extends KeyMap {
     @Override
     public CharConstruction getCharCon(int ascii_code) {
         return KeyMap_EN_US.KEY_MAP.get(ascii_code);
-    }
+    }    
 }

@@ -16,15 +16,16 @@
  */
 package cogimag.java.keyboard.development;
 
-import cogimag.java.keyboard.RoboSteno;
 import cogimag.java.keyboard.KeyMap_EN_US;
-import java.awt.event.KeyEvent;
+import cogimag.java.keyboard.RoboSteno;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -36,10 +37,11 @@ import javax.swing.UnsupportedLookAndFeelException;
 /**
  * Tests the KeyMap_EN_US by looking up in the HashMap a character that the user types
  into the input box and repeating this character to the output box through 
- java.awt.Robot. <br>
+ java.awt.Robot. In order to adapt the tester to other key maps, alter the constructor
+ * to take your custom key map as an argument.<br>
  * Known issue: Does not work with Caps Lock. <br>
  * Known issue: main() throws StringIndexOutOfBoundsException if user presses Enter
- * when the input box is empty. There is no plan to fix this. The class is intended
+ * when the input box is empty. There is no plan to fix these bugs. The class is intended
  * for development use only.
  * @author MichalG HP Envy
  */
@@ -58,10 +60,9 @@ public class RobotTester extends JFrame implements KeyListener, ActionListener {
     private JButton btnClear;
     private static final String BTN_CLEAR_TEXT = "Clear text";
     
-    private RoboSteno typist;
+    private static RoboSteno typist;
     
-    public static void main(String[] args) {
-        
+    public static void main(String[] args) {        
         try {
             //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
             //UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
@@ -138,6 +139,12 @@ public class RobotTester extends JFrame implements KeyListener, ActionListener {
         getContentPane().add(paneButtonContainer, BorderLayout.PAGE_END);
     }
     
+    /**
+     * The ASCII number can be obtained from the keyTyped event. However, separating
+     * the actual key typed from the Enter key typed is a nuisance. An alternative
+     * is to derive the ASCII number from the character in the text field.
+     * @param e 
+     */
     @Override
     public void keyTyped(KeyEvent e) {
 //        System.out.print("key typed event.");
@@ -184,14 +191,15 @@ public class RobotTester extends JFrame implements KeyListener, ActionListener {
 //        txtOutput.setCaretPosition(txtOutput.getDocument().getLength());
         typist.type((char)txtInput.getText().codePointAt(0));
         
+        //wait for typing to be completed, then check
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 String inputChar = txtInput.getText().substring(0, 1);
                 //output box may be empty if the typist is slow
                 if (txtOutput.getText().length() > 0) {
+                    //simplify this to substring(0, 1), since output box is erased later?
                     String robotOutput = txtOutput.getText().substring(txtOutput.getText().length()-1);
-
     //                System.out.println("output window last char\t" + lastChar);                
                     String testResult = "you typed " + inputChar + ". robot typed " + 
                             robotOutput + ". do they match? " + inputChar.equals(robotOutput);
@@ -203,8 +211,5 @@ public class RobotTester extends JFrame implements KeyListener, ActionListener {
                 txtOutput.setText("");
             }
         });       
-
-    }
-    
-    
+    }    
 }

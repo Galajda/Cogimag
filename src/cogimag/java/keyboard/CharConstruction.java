@@ -17,34 +17,30 @@
 package cogimag.java.keyboard;
 
 /**
- * 
+ * Object contains three primitives that identify printable characters. Supports
+ * automated typing utilities {@link RoboSteno} and {@link KeyEventDispatcher}.
  * @author Michal G. <Michal.G at cogitatummagnumtelae.com>
  */
 public class CharConstruction {
     
-//        int asciiCode;
     /**
-     * the appearance of the character on the screen, e.g. a, A, 1, !
+     * the appearance of the character on the screen, such as a, A, 1, !
      */
     public final String rendering;
     /**
-     * the  java.awt.event.KeyEvent.VK_ constant of the base (unshifted) key on the keyboard
-     *
+     * the  java.awt.event.KeyEvent.VK_ constant of the base (unshifted) key on 
+     * the keyboard that must be pressed in order to type the character
      */
     public final int keyEventConstant;
     /**
      * true if shift must be pressed in combination with the base key to get the rendering 
      */
     public final boolean isShifted;
-        
-//constructor
-//        CharConstruction(int ascii_code, int vk_constant, boolean is_shifted) {
+    
     public CharConstruction(String displayed_char, int vk_constant, boolean is_shifted) {
-//            asciiCode = ascii_code;
         rendering = displayed_char;
         keyEventConstant = vk_constant;
         isShifted = is_shifted;
-
     }
     
 }

@@ -24,7 +24,7 @@ import java.util.List;
 import javax.swing.SwingUtilities;
 
 /**
- * Adapted from SO 14572270
+ * Adapted from MadProgrammer's example in SO 14572270
  * @author MichalG HP Envy
  */
 public class KeyEventDispatcher {
@@ -54,12 +54,11 @@ public class KeyEventDispatcher {
             try {
                 SwingUtilities.invokeAndWait(
                         new Runnable() {
-                    @Override
-                    public void run() {
-                        System.out.println("invoke and wait");
-                        fireEvent(map, ascii_number);
-                    }
-                            
+                            @Override
+                            public void run() {
+                                System.out.println("invoke and wait");
+                                fireEvent(map, ascii_number);
+                            }               
                         }
                 );
             }

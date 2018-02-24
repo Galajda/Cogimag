@@ -19,21 +19,15 @@ package cogimag.java.keyboard.development;
 import cogimag.java.keyboard.CharConstruction;
 import cogimag.java.keyboard.KeyMap;
 import cogimag.java.keyboard.KeyMap_EN_US;
-//import cogimag.java.keyboard.development.SampleExtendedKeyMap;
 
-import java.awt.event.KeyEvent;
-import java.lang.reflect.Field;
-//import java.lang.reflect.Modifier;
-//import java.awt.Robot;
-//import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.lang.reflect.Field;
 
-//import java.util.ArrayList;
-//import java.util.HashMap;
 import javafx.scene.input.KeyCode;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -46,21 +40,27 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  * Main method to be run during application development. <br>
- Automates the process of creating a HashMap for use by Robot or manually triggered KeyEvent.
- The class provides a simple window with a text input box and a text output box. The user will 
- type one character from the keyboard into the text input  box. The keyPressed event captures the 
- java.awt.event.KeyEvent.VK_ code as an integer and checks the status of the shift key (is this character 
- on the first level of the keyboard, or must the user press shift to obtain it, as for upper-case letters?).
- The keyTyped event captures the ASCII number of the displayed character and its String representation.
- With these four parameters, an entry in the KeyMap HashMap can be constructed. For readability, the VK_
- integer is converted into its class name, e.g., KeyEvent.VK_A. The developer may press every printable
- character on the local keyboard, obtaining a complete list of the KeyMap entries needed to read and type 
- the characters on the client's keyboard. The built-in KeyMap_EN_US class contains such a list for the US-English
- QWERTY keyboard. If the client uses a different keyboard, the developer may extend the built-in class
- and hide the MakeMap() method with a new method containing the client's keyboard map.
- <br><br>
- * Known issue: " and \ need escape char. Currently this must be fixed manually after the put statements are generated.
- * <br><br>
+ * Automates the process of creating a HashMap for use by {@link Robot} or programmatically 
+ * triggered {@link KeyEvent}. The class provides a simple window with a text input box 
+ * and a text output box. The user will type one character from the keyboard into
+ * the text input box. The keyPressed event captures the 
+ * <a href="https://docs.oracle.com/javase/8/docs/api/constant-values.html#java.awt.event.KeyEvent.CHAR_UNDEFINED">
+ * java.awt.event.KeyEvent.VK_ code</a>
+ * as an integer and checks the status of the shift key (is this character on the 
+ * first level of the keyboard, or must the user press shift to obtain it, as for
+ * upper-case letters?). The keyTyped event captures the ASCII number of the
+ * displayed character and its String representation. With these four parameters,
+ * an entry in the KeyMap HashMap can be constructed. For readability, the VK_
+ * integer is converted into its class name, e.g., KeyEvent.VK_A. The developer 
+ * may press every printable character on the local keyboard, obtaining a complete
+ * list of the KeyMap entries needed to read and type the characters on the client's
+ * keyboard. The built-in KeyMap_EN_US class contains such a list for the US-English
+ * QWERTY keyboard. If the client uses a different keyboard, the developer may 
+ * extend the built-in class and hide the MakeMap() method with a new method 
+ * containing the client's keyboard map.<br>
+ * Known issue: " and \ need escape char. Currently this must be fixed manually
+ * after the put statements are generated.<br>
+ * Known issue: The newline character has not been considered.<br><br>
  * Adapted from KeyEventDemo.java (attached) by Oracle. Read the full article  at 
  * <a href="https://docs.oracle.com/javase/tutorial/uiswing/events/keylistener.html">Oracle key listener tutorial</a>
  * @author Michal G. <Michal.G at cogitatummagnumtelae.com>
@@ -94,6 +94,7 @@ public class MapGenerator extends JFrame implements KeyListener, ActionListener 
         
         System.out.println("en-us key map size " + KeyMap_EN_US.KEY_MAP.size());
         System.out.println("first value from en-us key map " + KeyMap_EN_US.KEY_MAP.get(33).rendering);
+        
         System.out.println("sample key map size " + SampleExtendedKeyMap.KEY_MAP.size());
         System.out.println("first value from sample key map " + SampleExtendedKeyMap.KEY_MAP.get(33).rendering);
         try {
@@ -171,11 +172,6 @@ public class MapGenerator extends JFrame implements KeyListener, ActionListener 
 //        System.out.println("key press event");
         if (!(KeyEvent.getKeyText(e.getKeyCode()).equalsIgnoreCase(KeyCode.SHIFT.toString()))) {
             //get key code and modifier
-//            txtOutput.append(KeyParser.getDisplayInfo(e, "Key pressed: "));
-//            txtOutput.append("key pressed event");
-//            txtOutput.append("\tkey code = " + e.getKeyCode() + NEWLINE); //VK_ number
-//            txtOutput.append("\t\tmodifier = " + KeyEvent.getModifiersExText(e.getModifiersEx()) + NEWLINE);
-//            txtOutput.setCaretPosition(txtOutput.getDocument().getLength());
             vkNumber = e.getKeyCode();
             isShifted = ("Shift".equals(KeyEvent.getModifiersExText(e.getModifiersEx())));
         }        
@@ -184,14 +180,7 @@ public class MapGenerator extends JFrame implements KeyListener, ActionListener 
     @Override
     public void keyTyped(KeyEvent e) {
 //        System.out.println("key typed event");        
-//        txtOutput.append(KeyParser.getDisplayInfo(e, "Key typed: "));
-//        txtOutput.setCaretPosition(txtOutput.getDocument().getLength());
-        //get key char
-//        txtOutput.append("key typed event");
         int asciiNumber = Character.toString(e.getKeyChar()).codePointAt(0);
-//        txtOutput.append("\t\tkey char = " + e.getKeyChar() + NEWLINE); //char as printed
-//        txtOutput.append("\t\tascii # " + asciiNumber + NEWLINE);
-//        txtOutput.setCaretPosition(txtOutput.getDocument().getLength());
         displayedChar = String.valueOf(e.getKeyChar());
         charCon = new CharConstruction(displayedChar, vkNumber, isShifted);
         String mapGen = MapGenerator.formatMapPut(asciiNumber, charCon);
@@ -203,8 +192,6 @@ public class MapGenerator extends JFrame implements KeyListener, ActionListener 
     @Override
     public void keyReleased(KeyEvent e) {
 //        System.out.println("key release event");
-//        txtOutput.append(KeyParser.getDisplayInfo(e, "Key released: "));
-//        txtOutput.setCaretPosition(txtOutput.getDocument().getLength());
     }
 
     /**
@@ -214,9 +201,7 @@ public class MapGenerator extends JFrame implements KeyListener, ActionListener 
     @Override
     public void actionPerformed(ActionEvent e) {
         //split clear and copy
-//        e.getID()
-        JButton btn = (JButton) e.getSource();
-        
+        JButton btn = (JButton) e.getSource();        
 //        System.out.println("button text " + btn.getText());
         switch (btn.getText()) {
             case MapGenerator.BTN_CLEAR_TEXT:                
@@ -228,8 +213,7 @@ public class MapGenerator extends JFrame implements KeyListener, ActionListener 
                 txtOutput.selectAll();
                 txtOutput.copy();
                 break;
-            default:
-                
+            default:                
         }
         txtInput.requestFocusInWindow();
     }
@@ -250,17 +234,25 @@ public class MapGenerator extends JFrame implements KeyListener, ActionListener 
         
         return sb.toString();
     }
-    public static String getVkCode (int testVal) {
+    /**
+     * Runs through all fields of the KeyEvent class, seeking a match of the 
+     * integer values.
+     * @param vkValueToMatch the integer value for which the VK_ constant name
+     * is to be found
+     * @return the String form of the VK_ constant name, such as VK_A, null if
+     * no match is found.
+     */
+    public static String getVkCode (int vkValueToMatch) {
 //        System.out.println("iterating through key event static fields");
-        String returnVal = null;
+        String vkConstantName = null;
         Field[] classFields = KeyEvent.class.getDeclaredFields();
         for (Field f : classFields) {            
             if (f.getName().startsWith("VK_")) {
-                int vkValue;
+                int vkCandidateValue;
                 try {
-                    vkValue = f.getInt(f);
-                    if (testVal == vkValue) {
-                        returnVal = f.getName();
+                    vkCandidateValue = f.getInt(f);
+                    if (vkValueToMatch == vkCandidateValue) {
+                        vkConstantName = f.getName();
                     }
                 }
                 catch (Exception ex) {
@@ -273,6 +265,6 @@ public class MapGenerator extends JFrame implements KeyListener, ActionListener 
                     //same as s                
             }
         }
-        return returnVal;
+        return vkConstantName;
     }
 }
