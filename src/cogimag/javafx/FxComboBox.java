@@ -27,30 +27,31 @@ import javafx.scene.input.KeyEvent;
  */
 public class FxComboBox extends ComboBox<String> {
     /**
-     * Null-argument constructor sets key release handler
+     * Zero-argument constructor sets key release handler
      */
     public FxComboBox() {
         super();
-        super.setOnKeyReleased(e -> comboBoxKeyboardShortcut(e));
+        super.setOnKeyPressed(e -> comboBoxKeyboardShortcut(e));
     }
     /**
      * The combo box may be initialized with the values of the options.
      * @param items the String Collection of options in the combo box
      */
     public FxComboBox(Collection<String> items) {
+        super();
         super.getItems().addAll(items);
-        super.setOnKeyReleased(e -> comboBoxKeyboardShortcut(e));
+        super.setOnKeyPressed(e -> comboBoxKeyboardShortcut(e));
     }
     /**
      * The combo box may be initialized with an id and the Collection of option values.
-     * @param control_id the id of this instance of the combo box
+     * @param control_id the id of this instance of the combo box control
      * @param items the String Collection of options in the combo box
      */
     public FxComboBox(String control_id, Collection<String> items) {
         super();
         super.getItems().addAll(items);
         super.setId(control_id);
-        super.setOnKeyReleased(e -> comboBoxKeyboardShortcut(e));
+        super.setOnKeyPressed(e -> comboBoxKeyboardShortcut(e));
     }
     
     
