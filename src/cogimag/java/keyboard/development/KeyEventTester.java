@@ -37,14 +37,14 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 /**
- * Tests the KeyMap_EN_US by looking up in the HashMap a character that the user types
- * into the input box and repeating this character to the output box through 
- * java.awt.event.KeyEvent. In order to adapt the tester to other key maps, alter
- * the call to KeyEventDispatcher.fireEvent() in dispatchKeyEvent() to take 
- * your custom key map as an argument.<br>
- * Known issue: main() throws StringIndexOutOfBoundsException if user presses Enter
- * when the input box is empty. There is no plan to fix this bug. The class is intended
- * for development use only.
+ * Tests the KeyMap_EN_US by looking up in the HashMap a character that the user
+ * types into the input box and repeating this character to the output box through 
+ * java.awt.event.KeyEvent. In order to adapt the tester to other key maps, the 
+ * user may alter the call to KeyEventDispatcher.fireEvent in dispatchKeyEvent 
+ * to take a custom key map as an argument.<br>
+ * Known issue: main throws StringIndexOutOfBoundsException if user presses Enter
+ * when the input box is empty. There is no plan to fix this bug. The class is 
+ * intended for development use only.
  * @author MichalG HP Envy
  */
 public class KeyEventTester extends JFrame implements KeyListener, ActionListener {
@@ -161,7 +161,7 @@ public class KeyEventTester extends JFrame implements KeyListener, ActionListene
     
     /**
      * Button click handler
-     * @param e 
+     * @param e button click event
      */
     @Override
     public void actionPerformed(ActionEvent e) {        

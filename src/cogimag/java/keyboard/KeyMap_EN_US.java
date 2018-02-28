@@ -21,7 +21,7 @@ import java.awt.event.KeyEvent;
 
 /**
  * The mapping for the US-English keyboard. 
- * @author Michal G. <Michal.G at cogitatummagnumtelae.com>
+ * @author Michal G.
  */
 public class KeyMap_EN_US extends KeyMap {    
     /**    
@@ -33,7 +33,7 @@ public class KeyMap_EN_US extends KeyMap {
      * Credit for static initializer technique to SO 6802483 and 26999663. 
      * @return KEY_MAP     
      */
-    public static HashMap makeMap() {
+    public static HashMap<Integer, CharConstruction> makeMap() {
         System.out.println("en-us static method");        
         
         HashMap<Integer, CharConstruction> map = new HashMap<>();
@@ -131,13 +131,11 @@ public class KeyMap_EN_US extends KeyMap {
         map.put(62, new CharConstruction(">", KeyEvent.VK_PERIOD, true));
         map.put(63, new CharConstruction("?", KeyEvent.VK_SLASH, true));
         
-        //map generator produces this for alt-0233. map tester says it fails
+        //map generator produces this for alt-0233.
 //        map.put(233, new CharConstruction("é", KeyEvent.VK_NUMPAD3, false));
 
-        
         return map;
     }
-    
     
     @Override
     public CharConstruction getCharCon(char c) {

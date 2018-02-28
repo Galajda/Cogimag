@@ -34,7 +34,6 @@ public class KeyEventDispatcher {
         if (EventQueue.isDispatchThread()) {
             System.out.println("on dispatch thread");    
             List<KeyEvent> events = new ArrayList<>();
-//            List<Integer> modifiers = new ArrayList<>();
             events.clear();
             int modifier = (charCon.isShifted) ? (KeyEvent.VK_SHIFT) : 0;            
             KeyEvent ke;

@@ -33,8 +33,9 @@ public class RoboSteno {
     
     /**
      * The robot must be linked to a KeyMap in order to look up the correct
-     * CharConstruction object 
-     * @param m 
+     * CharConstruction object.
+     * @param m the language-specific KeyMap to which characters will be 
+     * matched
      */
     public RoboSteno(KeyMap m) {
         map = m;
@@ -49,10 +50,11 @@ public class RoboSteno {
         }
     }
     /**
-     * Fundamental typing method. Overloaded methods call this to print characters
-     * on the screen. Method checks for availability of the Robot. If offline, 
-     * no chars are typed, no Exception is thrown.
-     * @param charCon 
+     * Fundamental typing method. Overloaded methods call this to print 
+     * characters on the screen. Method checks for availability of the Robot. 
+     * If offline, no chars are typed, no Exception is thrown.
+     * @param charCon the CharConstruction object representing the character
+     * to be typed
      */
     public void type(CharConstruction charCon) {
         if (isRobotOnline) {            

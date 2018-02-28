@@ -40,10 +40,11 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  * Main method to be run during application development. <br>
- * Automates the process of creating a HashMap for use by {@link Robot} or programmatically 
- * triggered {@link KeyEvent}. The class provides a simple window with a text input box 
- * and a text output box. The user will type one character from the keyboard into
- * the text input box. The keyPressed event captures the 
+ * Automates the process of creating a HashMap for use by Robot or 
+ * programmatically triggered KeyEvent. The class provides a simple 
+ * window with a text input box and a text output box. The user will type one 
+ * character from the keyboard into the text input box. The keyPressed event 
+ * captures the 
  * <a href="https://docs.oracle.com/javase/8/docs/api/constant-values.html#java.awt.event.KeyEvent.CHAR_UNDEFINED">
  * java.awt.event.KeyEvent.VK_ code</a>
  * as an integer and checks the status of the shift key (is this character on the 
@@ -56,14 +57,15 @@ import javax.swing.UnsupportedLookAndFeelException;
  * list of the KeyMap entries needed to read and type the characters on the client's
  * keyboard. The built-in KeyMap_EN_US class contains such a list for the US-English
  * QWERTY keyboard. If the client uses a different keyboard, the developer may 
- * extend the built-in class and hide the MakeMap() method with a new method 
+ * extend the built-in class and hide the makeMap method with a new method 
  * containing the client's keyboard map.<br>
  * Known issue: " and \ need escape char. Currently this must be fixed manually
  * after the put statements are generated.<br>
  * Known issue: The newline character has not been considered.<br><br>
  * Adapted from KeyEventDemo.java (attached) by Oracle. Read the full article  at 
- * <a href="https://docs.oracle.com/javase/tutorial/uiswing/events/keylistener.html">Oracle key listener tutorial</a>
- * @author Michal G. <Michal.G at cogitatummagnumtelae.com>
+ * <a href="https://docs.oracle.com/javase/tutorial/uiswing/events/keylistener.html">
+ * Oracle key listener tutorial</a>
+ * @author Michal G.
  */
 public class MapGenerator extends JFrame implements KeyListener, ActionListener {
     //alternative: make components final. declare them in constructor. assign listener in the runnable
@@ -146,17 +148,14 @@ public class MapGenerator extends JFrame implements KeyListener, ActionListener 
     
     private void addComponentsToPane() {        
         txtInput = new JTextField(20);
-//        txtInput.addActionListener(this);
         txtInput.addKeyListener(this);
         getContentPane().add(txtInput, BorderLayout.PAGE_START);
         
         txtOutput = new JTextArea();
 //        txtOutput.setEditable(false);
         paneOutputContainer = new JScrollPane(txtOutput);
-//        paneOutputContainer = new JScrollPane();
         paneOutputContainer.setPreferredSize(new Dimension(500,600));
-//        paneOutputContainer.add(txtOutput);
-//        paneOutputContainer.revalidate();
+
         getContentPane().add(paneOutputContainer, BorderLayout.CENTER);
         
         btnClear = new JButton(MapGenerator.BTN_CLEAR_TEXT);
@@ -196,7 +195,7 @@ public class MapGenerator extends JFrame implements KeyListener, ActionListener 
 
     /**
      * Button click listener
-     * @param e 
+     * @param e button click event
      */
     @Override
     public void actionPerformed(ActionEvent e) {

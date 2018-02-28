@@ -19,7 +19,7 @@ package cogimag.java.keyboard;
 /**
  * Object contains three primitives that identify printable characters. Supports
  * automated typing utilities {@link RoboSteno} and {@link KeyEventDispatcher}.
- * @author Michal G. <Michal.G at cogitatummagnumtelae.com>
+ * @author Michal G.
  */
 public class CharConstruction {
     
@@ -33,7 +33,8 @@ public class CharConstruction {
      */
     public final int keyEventConstant;
     /**
-     * true if shift must be pressed in combination with the base key to get the rendering 
+     * true if shift must be pressed in combination with the base key to get 
+     * the rendering 
      */
     public final boolean isShifted;
     
@@ -41,6 +42,5 @@ public class CharConstruction {
         rendering = displayed_char;
         keyEventConstant = vk_constant;
         isShifted = is_shifted;
-    }
-    
+    }    
 }

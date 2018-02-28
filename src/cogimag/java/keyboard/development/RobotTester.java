@@ -35,14 +35,14 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 /**
- * Tests the KeyMap_EN_US by looking up in the HashMap a character that the user types
- into the input box and repeating this character to the output box through 
- java.awt.Robot. In order to adapt the tester to other key maps, alter the constructor
- * to take your custom key map as an argument.<br>
+ * Tests the KeyMap_EN_US by looking up in the HashMap a character that the user
+ * types into the input box and repeating this character to the output box through 
+ * java.awt.Robot. In order to adapt the tester to other key maps, the user may
+ * alter the constructor to take a custom key map as an argument.<br>
  * Known issue: Does not work with Caps Lock. <br>
- * Known issue: main() throws StringIndexOutOfBoundsException if user presses Enter
- * when the input box is empty. There is no plan to fix these bugs. The class is intended
- * for development use only.
+ * Known issue: main throws StringIndexOutOfBoundsException if user presses Enter
+ * when the input box is empty. There is no plan to fix these bugs. The class is
+ * intended for development use only.
  * @author MichalG HP Envy
  */
 public class RobotTester extends JFrame implements KeyListener, ActionListener {
@@ -140,10 +140,11 @@ public class RobotTester extends JFrame implements KeyListener, ActionListener {
     }
     
     /**
-     * The ASCII number can be obtained from the keyTyped event. However, separating
-     * the actual key typed from the Enter key typed is a nuisance. An alternative
-     * is to derive the ASCII number from the character in the text field.
-     * @param e 
+     * The ASCII number can be obtained from the keyTyped event. However, 
+     * separating the actual key typed from the Enter key typed is a nuisance. 
+     * An alternative is to derive the ASCII number from the character in the 
+     * text field.
+     * @param e key event
      */
     @Override
     public void keyTyped(KeyEvent e) {
@@ -185,10 +186,8 @@ public class RobotTester extends JFrame implements KeyListener, ActionListener {
     }
     private void echoChar() {    
 //        System.out.println("input text:" + txtInput.getText());
-//        txtOutput.append(NEWLINE + "you typed " + txtInput.getText() + " the robot types " );
         txtOutput.requestFocusInWindow();
 //        typist.testAccent();
-//        txtOutput.setCaretPosition(txtOutput.getDocument().getLength());
         typist.type((char)txtInput.getText().codePointAt(0));
         
         //wait for typing to be completed, then check
