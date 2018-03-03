@@ -38,8 +38,7 @@ public class KeyMap_EN_US extends KeyMap {
         
         HashMap<Integer, CharConstruction> map = new HashMap<>();
         
-        //manually added
-        map.put(32, new CharConstruction(" ", KeyEvent.VK_SPACE, false));
+        //manually added        
         map.put(10, new CharConstruction("\n", KeyEvent.VK_ENTER, false));
         map.put(9, new CharConstruction("\t", KeyEvent.VK_TAB, false));
         map.put(92, new CharConstruction("\\", KeyEvent.VK_BACK_SLASH, false));
@@ -139,6 +138,7 @@ public class KeyMap_EN_US extends KeyMap {
         map.put(62, new CharConstruction(">", KeyEvent.VK_PERIOD, true));
         map.put(63, new CharConstruction("?", KeyEvent.VK_SLASH, true));
         
+        map.put(32, new CharConstruction(" ", KeyEvent.VK_SPACE, false));
         //map generator produces this for alt-0233.
 //        map.put(233, new CharConstruction("é", KeyEvent.VK_NUMPAD3, false));
 
