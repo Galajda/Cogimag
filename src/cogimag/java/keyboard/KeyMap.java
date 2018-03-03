@@ -74,5 +74,47 @@ public abstract class KeyMap {
     public CharConstruction getCharCon(int ascii_code) throws java.lang.NullPointerException {
         //sublclass should return KEY_MAP.get(ascii_code);
         throw new java.lang.NullPointerException();
-    }    
+    }
+    
+    /**
+     * Converts a string of one typed element into an integer from the ASCII table.
+     * @param one_char String for one typed char, which may literally be one
+     * unit long, in the case of letters, numbers and punctuation, or may be
+     * two units long, in the case of escaped chars \n, \t, \\, \"
+     * @return an ASCII decimal number for the character if the character
+     * meets the criteria, 0 otherwise
+     */
+    public static int getAsciiNumber(String one_char) {
+        switch (one_char.length()) {
+            case 0:
+                //assume enter key. cr or lf?
+                return 13;
+
+            case 1:
+                //normal char
+                System.out.println("firing event for single char");
+                return one_char.codePointAt(0);
+            case 2:
+                //escaped char
+                switch (one_char.charAt(1)) {
+                    case 't':
+                        System.out.println("esc t");
+                        return 9;
+                    case 'n':
+                        System.out.println("esc n");
+                        return 10;
+                    case '\\':
+                        System.out.println("esc backslash");
+                        return 92;
+                    case '\"':
+                        System.out.println("esc dbl quote");
+                        return 34;
+                }
+            default:
+                //
+                return 0;
+        }
+    }
+
+    
 }
