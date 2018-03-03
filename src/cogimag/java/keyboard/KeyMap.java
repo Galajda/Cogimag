@@ -16,6 +16,7 @@
  */
 package cogimag.java.keyboard;
 
+import java.awt.event.KeyEvent;
 import java.util.HashMap;
 
 /**
@@ -41,6 +42,13 @@ public abstract class KeyMap {
 //        System.out.println("parent key map static method");    
         HashMap<Integer, CharConstruction> map = new HashMap<>();
         
+        //add these to the statements from MapGenerator
+//        map.put(10, new CharConstruction("\n", KeyEvent.VK_ENTER, false));
+//        map.put(9, new CharConstruction("\t", KeyEvent.VK_TAB, false));
+//        map.put(92, new CharConstruction("\\", KeyEvent.VK_BACK_SLASH, false));
+//        map.put(34, new CharConstruction("\"", KeyEvent.VK_QUOTE, true));
+        
+        
         return map;
     }
     /**
@@ -55,7 +63,8 @@ public abstract class KeyMap {
     /**
      * Base method throws {@code NullPointerException} because map is empty
      * @param c a single {@code char} from the range of printable characters
-     * @return the CharConstruction corresponding to the input character, or null
+     * @return in subclasses, the CharConstruction corresponding to the input 
+     * character, null or other as the designer wishes in the case of no match
      * @throws java.lang.NullPointerException always because the base map is 
      * empty
      */
@@ -67,7 +76,8 @@ public abstract class KeyMap {
      * Base method throws {@code NullPointerException} because map is empty.
      * Subclasses may decide how to handle value not found case.
      * @param ascii_code an {@code int} from the range of printable characters
-     * @return the CharConstruction corresponding to the input number, or null
+     * @return the CharConstruction corresponding to the input number, null or 
+     * other as the designer wishes in the case of no match
      * @throws java.lang.NullPointerException always because the base map is
      * empty
      */
@@ -109,9 +119,10 @@ public abstract class KeyMap {
                     case '\"':
                         System.out.println("esc dbl quote");
                         return 34;
+                    default:
+                        return 0;
                 }
             default:
-                //
                 return 0;
         }
     }
