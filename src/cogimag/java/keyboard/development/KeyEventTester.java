@@ -50,8 +50,9 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class KeyEventTester extends JFrame implements KeyListener, ActionListener {
     private JSplitPane paneTxtFieldContainer;
     private JTextField txtInput;
+    private static final String TXT_INPUT_NAME = "text field input"; 
     private JTextField txtOutput;    
-    
+    private static final String TXT_OUTPUT_NAME = "text field ouput";
     private JScrollPane paneOutputContainer;    
     private JTextArea txtTestResults;
     
@@ -106,7 +107,7 @@ public class KeyEventTester extends JFrame implements KeyListener, ActionListene
         
         //Display the window.
         frame.pack();
-        frame.setBounds(700, 50, 400, 500);
+        frame.setBounds(700, 50, 500, 500);
         frame.setVisible(true);
     }
     
@@ -115,17 +116,22 @@ public class KeyEventTester extends JFrame implements KeyListener, ActionListene
     }
     
     private void addComponentsToPane() {        
-        txtInput = new JTextField(200);
-        txtInput.setMinimumSize(new Dimension(150,20));
+        txtInput = new JTextField(240);
+        txtInput.setMinimumSize(new Dimension(240,20));
+        txtInput.setName(TXT_INPUT_NAME);
+//        txtInput.setFocusTraversalKeysEnabled(false);
         txtInput.addKeyListener(this);
-        txtOutput = new JTextField(20);
+        
+        txtOutput = new JTextField(200);
+        txtOutput.setName(TXT_OUTPUT_NAME);
+        txtOutput.setFocusTraversalKeysEnabled(false); //catch tab press in the box
         txtOutput.addKeyListener(this);
         paneTxtFieldContainer = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, txtInput, txtOutput);
         paneTxtFieldContainer.setDividerLocation((double)0.5);
         getContentPane().add(paneTxtFieldContainer, BorderLayout.PAGE_START);
         
         txtTestResults = new JTextArea("Test results\n");
-        txtTestResults.setEditable(false);
+//        txtTestResults.setEditable(false);
         paneOutputContainer = new JScrollPane(txtTestResults);
         paneOutputContainer.setPreferredSize(new Dimension(500,600));
         getContentPane().add(paneOutputContainer, BorderLayout.CENTER);
@@ -145,18 +151,64 @@ public class KeyEventTester extends JFrame implements KeyListener, ActionListene
 //        asciiNumber = e.getKeyChar() + 0;
 //        asciiNumber = Character.toString(e.getKeyChar()).codePointAt(0);
 //        System.out.println("ascii number=" + Character.toString(e.getKeyChar()).codePointAt(0));
+        if (e.getSource().getClass().equals(javax.swing.JTextField.class)) {
+//            System.out.println("key release event from source " + e.getSource().getClass());
+            JTextField txtFieldSrc = (JTextField)e.getSource();
+            if (txtFieldSrc.getName().equals(TXT_OUTPUT_NAME)) {
+//                System.out.println("key typed event from output box. key char = " + e.getKeyChar() + " as int = " + (e.getKeyChar() + 0));
+                int inputCharAsciiCode =  KeyMap_EN_US.getAsciiNumber(txtInput.getText());
+                System.out.println("key typed event from output box. input as int = " + inputCharAsciiCode);
+                int outputCharAsciiCode = (e.getKeyChar() + 0);
+                System.out.println("key typed event from output box. output as int = " + outputCharAsciiCode);
+                String testResult = "you typed " + txtInput.getText() + ". input ascii number = " + inputCharAsciiCode +
+                        ". output ascii number = " + outputCharAsciiCode + ". match ? " + (inputCharAsciiCode == outputCharAsciiCode);
+                txtTestResults.append(testResult + "\n");
+                
+                //wait until key events are done before clearing the text fields
+                javax.swing.SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        txtInput.requestFocusInWindow();
+                        txtInput.setText("");
+                        txtOutput.setText("");
+                    }
+                    
+                });
+            }
+            
+        }
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//        System.out.println("key press event for source " + ((JTextField)e.getSource()).getName());        
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-            dispatchKeyEvent();
+        
+//        System.out.println("key release event from source " + e.getSource().getClass());
+        if (e.getSource().getClass().equals(javax.swing.JTextField.class)) {
+//            System.out.println("key release event from source " + e.getSource().getClass());
+            JTextField txtFieldSrc = (JTextField)e.getSource();
+            switch (txtFieldSrc.getName()) {
+                case TXT_INPUT_NAME:
+                    //if user pressed enter in input box, process the keys
+                    if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                        System.out.println("key release event for enter");
+                        dispatchKeyEvent();
+                    }
+                    break;
+                case TXT_OUTPUT_NAME:
+                    
+//                    System.out.println("key release in output box. key code = " + e.getKeyCode());
+                    //this gives the the VK number
+                default:
+                    
+            }
+            
         }
+        
     }
     
     /**
@@ -169,9 +221,10 @@ public class KeyEventTester extends JFrame implements KeyListener, ActionListene
 //        System.out.println("button text " + btn.getText());        
         switch (btn.getText()) {
             case KeyEventTester.BTN_CLEAR_TEXT:                
-//                System.out.println("btnClear click");                
+                System.out.println("btnClear click");                
                 txtOutput.setText("");
                 txtInput.setText("");
+                txtTestResults.setText("Test results\n");
                 txtInput.requestFocusInWindow();
                 break;
             case KeyEventTester.BTN_SUBMIT_TEXT:                
@@ -185,26 +238,70 @@ public class KeyEventTester extends JFrame implements KeyListener, ActionListene
 //        System.out.println("dispatching key event for ascii number " + txtInput.getText().codePointAt(0));
         txtOutput.requestFocusInWindow();
         //change this to suit your custom key map
-        KeyEventDispatcher.fireEvent(new KeyMap_EN_US(), txtInput.getText().codePointAt(0));
+        System.out.println("input text content = " + txtInput.getText() + " length = " + txtInput.getText().length());
+        KeyEventDispatcher.fireEvent(new KeyMap_EN_US(), KeyMap_EN_US.getAsciiNumber(txtInput.getText()));
+//        switch (txtInput.getText().length()) {
+//            case 0:
+//                //enter was pressed by itself. fire event for enter key
+//                KeyEventDispatcher.fireEvent(new KeyMap_EN_US(), 13);
+//                break;
+//            case 1:
+//                //normal char
+//                System.out.println("firing event for single char");
+//                KeyEventDispatcher.fireEvent(new KeyMap_EN_US(), txtInput.getText().codePointAt(0));
+//                break;
+//            case 2:
+//                //escaped char
+//                switch (txtInput.getText().charAt(1)) {
+//                    case 't':
+//                        System.out.println("esc t");
+//                        KeyEventDispatcher.fireEvent(new KeyMap_EN_US(), 9);
+//                        break;
+//                    case 'n':
+//                        System.out.println("esc n");
+//                        KeyEventDispatcher.fireEvent(new KeyMap_EN_US(), 10);
+//                        break;
+//                    case '\\':
+//                        System.out.println("esc backslash");
+//                        KeyEventDispatcher.fireEvent(new KeyMap_EN_US(), 92);
+//                        break;
+//                    case '\"':
+//                        System.out.println("esc dbl quote");
+//                        KeyEventDispatcher.fireEvent(new KeyMap_EN_US(), 34);
+//                        break;
+//                        
+//                }
+//            default:
+//                //should have cleared the box
+//        }
         
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                String inputChar = txtInput.getText().substring(0, 1);
-                //output box may be empty if the event is delayed
-                if (txtOutput.getText().length() > 0) {
-                    String eventQueueOutput = txtOutput.getText().substring(txtOutput.getText().length()-1);
-
-    //                System.out.println("output window last char\t" + lastChar);                
-                    String testResult = "you typed " + inputChar + ". event dispatcher posted " + 
-                            eventQueueOutput + ". do they match? " + inputChar.equals(eventQueueOutput);
-    //                System.out.println(testResult);    
-                    txtTestResults.append(testResult + "\n");
-                }
-                txtInput.requestFocusInWindow();
-                txtInput.setText("");
-                txtOutput.setText("");
-            }
-        });               
+//        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {
+////                System.out.println("invoke later");
+//                if (txtInput.getText().length() == 0) {
+//                    //enter was pressed by itself
+//                    
+//                }
+//                else {
+//                    
+//                }
+//                
+//                String inputChar = txtInput.getText().substring(0, 1);                
+//                //output box may be empty if the event is delayed
+//                if (txtOutput.getText().length() > 0) {
+//                    String eventQueueOutput = txtOutput.getText().substring(txtOutput.getText().length()-1);
+//
+//    //                System.out.println("output window last char\t" + lastChar);                
+//                    String testResult = "you typed " + inputChar + ". event dispatcher posted " + 
+//                            eventQueueOutput + ". do they match? " + inputChar.equals(eventQueueOutput);
+//    //                System.out.println(testResult);    
+//                    txtTestResults.append(testResult + "\n");
+//                }
+//                txtInput.requestFocusInWindow();
+//                txtInput.setText("");
+//                txtOutput.setText("");
+//            }
+//        });        
     }
 }
