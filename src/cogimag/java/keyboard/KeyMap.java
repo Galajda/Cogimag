@@ -38,7 +38,7 @@ public abstract class KeyMap {
      * @return the map of ASCII codes and their CharConstruction objects
      */
     private static HashMap<Integer, CharConstruction> makeMap() {
-        System.out.println("parent key map static method");    
+//        System.out.println("parent key map static method");    
         HashMap<Integer, CharConstruction> map = new HashMap<>();
         
         return map;
