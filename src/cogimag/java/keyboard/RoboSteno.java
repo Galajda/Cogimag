@@ -65,11 +65,18 @@ public class RoboSteno {
             r.delay(10);
         }        
     }
-    
+    /**
+     * Alternate argument type, depending on the designer's preference
+     * @param c a single {@code char} that will be repeated by the Robot
+     */
     public void type(char c) {
         type(map.getCharCon(c));
     }
-    
+    /**
+     * Useful for typing longer texts.
+     * @param s a String of unspecified length that will be broken up and typed
+     * one letter at at time.
+     */
     public void type(String s) {
         char[] charArray = s.toCharArray();
         for (char c : charArray) {
