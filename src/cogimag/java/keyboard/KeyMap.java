@@ -96,13 +96,14 @@ public abstract class KeyMap {
      */
     public static int getAsciiNumber(String one_char) {
         switch (one_char.length()) {
-            case 0:
-                //assume enter key. cr or lf?
-                return 13;
+//            case 0:
+//                //assume enter key. cr or lf?
+//                return 13;
 
             case 1:
-                //normal char
-                System.out.println("firing event for single char");
+                //TODO: ensure normal char
+                
+//                System.out.println("firing event for single char");
                 return one_char.codePointAt(0);
             case 2:
                 //escaped char
