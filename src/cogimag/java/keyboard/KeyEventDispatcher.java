@@ -29,10 +29,10 @@ import javax.swing.SwingUtilities;
  */
 public class KeyEventDispatcher {
     public static void fireEvent(KeyMap map, int ascii_number) {
-        System.out.println("firing key event");
+//        System.out.println("firing key event");
         CharConstruction charCon = map.getCharCon(ascii_number);
         if (EventQueue.isDispatchThread()) {
-            System.out.println("on dispatch thread");    
+//            System.out.println("on dispatch thread");    
             List<KeyEvent> events = new ArrayList<>();
             events.clear();
             int modifier = (charCon.isShifted) ? (KeyEvent.VK_SHIFT) : 0;            
@@ -63,6 +63,34 @@ public class KeyEventDispatcher {
             }
             catch (Exception ex) {
                 System.out.println("could not invoke and wait");
+            }
+        }
+    }
+    public static void fireEvent(KeyMap map, String s) {
+        for (int i=0;i<s.length();i++) {
+            //when checking for \, must ensure that there is a char following the \
+            if ((i<(s.length()-1)) && (s.codePointAt(i)==Character.toString('\\').codePointAt(0))) {
+//                System.out.println("found an escape char");
+                //examine the letter following the \
+                switch (s.codePointAt(++i)) {
+                    case '\\':
+                        fireEvent(map, ((KeyMap)map).getAsciiNumber("\\"));
+                        break;
+                    case 't':
+                        fireEvent(map, ((KeyMap)map).getAsciiNumber("\t"));
+                        break;
+                    case 'n':
+                        fireEvent(map, ((KeyMap)map).getAsciiNumber("\n"));
+                        break;
+                    case '"':
+                        fireEvent(map, ((KeyMap)map).getAsciiNumber("\""));
+                        break;
+                    default:
+                        //throw error, or just plod on like JavaScript?
+                }
+            }
+            else {
+                fireEvent(map, s.codePointAt(i));
             }
         }
     }
