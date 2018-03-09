@@ -88,25 +88,13 @@ public class RoboSteno {
      */
     public void type(String s) {
         char[] charArray = s.toCharArray();
-//        for (char c : charArray) {
-//            if (Character.toString(c).codePointAt(0)==Character.toString('\\').codePointAt(0)) {
-//                switch (c) {
-//                    
-//                }
-//                
-//                type(map.getAsciiNumber("\t"));
-//                type(((KeyMap)map).getAsciiNumber("\t"));
-//            }
-//            
-//            type(map.getCharCon(c));
-//        }
         //cannot use enhanced for loop because I want to increment i within
         //the loop when it encounters a \. I do not know how to increment
         //an enhanced loop counter.
         for (int i=0;i<s.length();i++) {
             //when checking for \, must ensure that there is a char following the \
             if ((i<(s.length()-1)) && (s.codePointAt(i)==Character.toString('\\').codePointAt(0))) {
-                System.out.println("found an escape char");
+//                System.out.println("found an escape char");
                 //examine the letter following the \
                 switch (s.codePointAt(++i)) {
                     case '\\':
@@ -128,7 +116,6 @@ public class RoboSteno {
             else {
                 type(map.getCharCon(s.codePointAt(i)));
             }
-
         }
     }
     
