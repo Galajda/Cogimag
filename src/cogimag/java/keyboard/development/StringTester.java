@@ -16,6 +16,7 @@
  */
 package cogimag.java.keyboard.development;
 
+import cogimag.java.keyboard.KeyEventDispatcher;
 import cogimag.java.keyboard.KeyMap_EN_US;
 import cogimag.java.keyboard.RoboSteno;
 
@@ -27,7 +28,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
+import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
@@ -40,14 +44,20 @@ import javax.swing.UnsupportedLookAndFeelException;
  * @author MichalG HP Envy
  */
 public class StringTester extends JFrame implements KeyListener, ActionListener{
-    private JSplitPane paneTxtFieldContainer;
+    private JSplitPane paneInputAndRadioContainer;
     private JTextField txtInput;
     private static final String TXT_INPUT_NAME = "text field input"; 
-    
+    private JPanel panelRadioContainer;
+    private JRadioButton rdoKeyEvent;
+    private static final String TXT_RDO_KEY_EVENT = "Use key event dispatcher";
+    private JRadioButton rdoRoboSteno;
+    private static final String TXT_RDO_ROBO_STENO = "Use robo steno";
+    private ButtonGroup grpRadioGroup;
     
     private JScrollPane paneOutputContainer;    
 //    private JTextArea txtTestResults;
     private JTextArea txtOutput;    
+    private static final String TXT_OUTPUT_HEADER = "Test results\n";
     private static final String TXT_OUTPUT_NAME = "text field ouput";
     
     private JSplitPane paneButtonContainer;    
@@ -115,16 +125,28 @@ public class StringTester extends JFrame implements KeyListener, ActionListener{
         txtInput.setMinimumSize(new Dimension(150,20));
         txtInput.setName(TXT_INPUT_NAME);
         txtInput.addKeyListener(this);
+        
+        rdoKeyEvent = new JRadioButton(StringTester.TXT_RDO_KEY_EVENT);
+        rdoKeyEvent.setSelected(true);
+        rdoRoboSteno = new JRadioButton(StringTester.TXT_RDO_ROBO_STENO);
+        rdoRoboSteno.setSelected(false);
 //        txtOutput = new JTextField(20);
 //        txtOutput.setName(StringTester.TXT_OUTPUT_NAME);
 //        txtOutput.addKeyListener(this);
-        paneTxtFieldContainer = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, txtInput, null);
-        paneTxtFieldContainer.setDividerLocation((double)0.5);
-        getContentPane().add(paneTxtFieldContainer, BorderLayout.PAGE_START);
+        grpRadioGroup = new ButtonGroup();
+        grpRadioGroup.add(rdoKeyEvent);
+        
+        grpRadioGroup.add(rdoRoboSteno);
+        panelRadioContainer = new JPanel();
+        panelRadioContainer.add(this.rdoKeyEvent);
+        panelRadioContainer.add(this.rdoRoboSteno);
+        paneInputAndRadioContainer = new JSplitPane(JSplitPane.VERTICAL_SPLIT, txtInput, panelRadioContainer);
+        paneInputAndRadioContainer.setDividerLocation((double)0.5);
+        getContentPane().add(paneInputAndRadioContainer, BorderLayout.PAGE_START);
         
         
         
-        txtOutput = new JTextArea("Test results\n");
+        txtOutput = new JTextArea(TXT_OUTPUT_HEADER);
         txtOutput.setName(StringTester.TXT_OUTPUT_NAME);
 //        txtOutput.setEditable(false);
         paneOutputContainer = new JScrollPane(txtOutput);
@@ -167,7 +189,7 @@ public class StringTester extends JFrame implements KeyListener, ActionListener{
             JTextField txtFieldSrc = (JTextField)e.getSource();
             //this structure can be reduced. it was used during experimentation.
             if (TXT_INPUT_NAME.equals(txtFieldSrc.getName()) && e.getKeyCode() == KeyEvent.VK_ENTER) {
-                System.out.println("key release event for enter");
+//                System.out.println("key release event for enter");
                 repeatString();
             }                        
         }        
@@ -183,7 +205,7 @@ public class StringTester extends JFrame implements KeyListener, ActionListener{
         switch (btn.getText()) {
             case StringTester.BTN_CLEAR_TEXT:                
 //                System.out.println("btnClear click");                
-                txtOutput.setText("");
+                txtOutput.setText(TXT_OUTPUT_HEADER);
                 txtInput.setText("");
                 txtInput.requestFocusInWindow();
                 break;
@@ -196,8 +218,17 @@ public class StringTester extends JFrame implements KeyListener, ActionListener{
         
     }
     private void repeatString() {
+        
         txtOutput.requestFocusInWindow();
         txtOutput.setCaretPosition(txtOutput.getDocument().getLength());
-        typist.type(txtInput.getText());
+        if (this.grpRadioGroup.getSelection().equals(this.rdoKeyEvent.getModel())) {
+            System.out.println("using key event");
+            KeyEventDispatcher.fireEvent(new KeyMap_EN_US(), this.txtInput.getText());
+        }
+        else {
+            System.out.println("using robo steno");
+            typist.type(txtInput.getText());
+        }
+        
     }
 }
