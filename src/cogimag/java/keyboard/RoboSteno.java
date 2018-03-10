@@ -98,19 +98,25 @@ public class RoboSteno {
                 //examine the letter following the \
                 switch (s.codePointAt(++i)) {
                     case '\\':
-                        type(((KeyMap)map).getAsciiNumber("\\"));
+//                        type(((KeyMap)map).getAsciiNumber("\\"));
+                        type('\\');
                         break;
                     case 't':
-                        type(((KeyMap)map).getAsciiNumber("\t"));
+//                        type(((KeyMap)map).getAsciiNumber("\t"));
+                        type('\t');
                         break;
                     case 'n':
-                        type(((KeyMap)map).getAsciiNumber("\n"));
+//                        type(((KeyMap)map).getAsciiNumber("\n"));
+                        type('\n');
                         break;
                     case '"':
-                        type(((KeyMap)map).getAsciiNumber("\""));
+//                        type(((KeyMap)map).getAsciiNumber("\""));
+                        type('\"');
                         break;
                     default:
                         //throw error, or just plod on like JavaScript?
+                        //currently, the \ and the following char are ignored
+                        //if the following char is not one of the above
                 }
             }
             else {
