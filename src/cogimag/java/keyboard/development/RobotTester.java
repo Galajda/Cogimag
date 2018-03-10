@@ -49,9 +49,11 @@ public class RobotTester extends JFrame implements KeyListener, ActionListener {
     //alternative: make components final. declare them in constructor. assign listener in the runnable
     private JSplitPane paneTxtFieldContainer;
     private JTextField txtInput;
+    private static final String TXT_INPUT_NAME = "text field input"; 
     private JTextField txtOutput;    
+    private static final String TXT_OUTPUT_NAME = "text field ouput";
     
-    private JScrollPane paneOutputContainer;    
+    private JScrollPane paneResultsContainer;    
     private JTextArea txtTestResults;
     
     private JSplitPane paneButtonContainer;    
@@ -105,7 +107,7 @@ public class RobotTester extends JFrame implements KeyListener, ActionListener {
         
         //Display the window.
         frame.pack();
-        frame.setBounds(700, 50, 400, 500);
+        frame.setBounds(700, 50, 500, 500);
         frame.setVisible(true);
     }
     
@@ -115,10 +117,13 @@ public class RobotTester extends JFrame implements KeyListener, ActionListener {
     }
     
     private void addComponentsToPane() {        
-        txtInput = new JTextField(200);
-        txtInput.setMinimumSize(new Dimension(150,20));
+        txtInput = new JTextField(240);
+        txtInput.setMinimumSize(new Dimension(240,20));
+        txtInput.setName(TXT_INPUT_NAME);
+//        txtInput.setMinimumSize(new Dimension(150,20));
         txtInput.addKeyListener(this);
         txtOutput = new JTextField(20);
+        txtOutput.setName(TXT_OUTPUT_NAME);
         txtOutput.addKeyListener(this);
         paneTxtFieldContainer = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, txtInput, txtOutput);
         paneTxtFieldContainer.setDividerLocation((double)0.5);
@@ -126,9 +131,9 @@ public class RobotTester extends JFrame implements KeyListener, ActionListener {
         
         txtTestResults = new JTextArea("Test results\n");
         txtTestResults.setEditable(false);
-        paneOutputContainer = new JScrollPane(txtTestResults);
-        paneOutputContainer.setPreferredSize(new Dimension(500,600));
-        getContentPane().add(paneOutputContainer, BorderLayout.CENTER);
+        paneResultsContainer = new JScrollPane(txtTestResults);
+        paneResultsContainer.setPreferredSize(new Dimension(500,600));
+        getContentPane().add(paneResultsContainer, BorderLayout.CENTER);
         
         btnSubmit = new JButton(RobotTester.BTN_SUBMIT_TEXT);
         btnSubmit.addActionListener(this);        
@@ -140,10 +145,14 @@ public class RobotTester extends JFrame implements KeyListener, ActionListener {
     }
     
     /**
-     * The ASCII number can be obtained from the keyTyped event. However, 
-     * separating the actual key typed from the Enter key typed is a nuisance. 
-     * An alternative is to derive the ASCII number from the character in the 
-     * text field.
+     * 
+     * The comparison between the user input and the automated output is done 
+     * in this event. Used exclusively to catch events from the output text 
+     * field, where the {@code KeyEventDispatcher} sends events. Key typed 
+     * events from other text fields are ignored. The ASCII number can be 
+     * obtained from the keyTyped event. However, separating the actual key 
+     * typed from the Enter key typed is a nuisance. An alternative is to derive
+     * the ASCII number from the character in the text field.
      * @param e key event
      */
     @Override
@@ -151,6 +160,30 @@ public class RobotTester extends JFrame implements KeyListener, ActionListener {
 //        System.out.print("key typed event.");
 //        asciiNumber = Character.toString(e.getKeyChar()).codePointAt(0);
 //        System.out.println(" ascii number=" + Character.toString(e.getKeyChar()).codePointAt(0));
+        if (e.getSource().getClass().equals(javax.swing.JTextField.class)) {
+//            System.out.println("key release event from source " + e.getSource().getClass());
+            JTextField txtFieldSrc = (JTextField)e.getSource();
+            if (txtFieldSrc.getName().equals(TXT_OUTPUT_NAME)) {
+//                System.out.println("key typed event from output box. key char = " + e.getKeyChar() + " as int = " + (e.getKeyChar() + 0));
+                int inputCharAsciiCode =  KeyMap_EN_US.getAsciiNumber(txtInput.getText());
+                System.out.println("key typed event from output box. input as int = " + inputCharAsciiCode);
+                int outputCharAsciiCode = (e.getKeyChar() + 0);
+                System.out.println("key typed event from output box. output as int = " + outputCharAsciiCode);
+                String testResult = "you typed " + txtInput.getText() + ". input ascii number = " + inputCharAsciiCode +
+                        ". output ascii number = " + outputCharAsciiCode + ". match ? " + (inputCharAsciiCode == outputCharAsciiCode);
+                txtTestResults.append(testResult + "\n");
+                
+                //wait until key events are done before clearing the text fields
+                javax.swing.SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        txtInput.requestFocusInWindow();
+                        txtInput.setText("");
+                        txtOutput.setText("");
+                    }                    
+                });
+            }
+        }
     }
 
     @Override
@@ -158,13 +191,32 @@ public class RobotTester extends JFrame implements KeyListener, ActionListener {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     * The automatic typing is initiated here. The method responds to
+     * the Enter key being pressed in the input text field, indicating that
+     * the user has finished typing the character and wishes to submit it for
+     * testing against the automatically generated character. KeyReleased
+     * events in other fields are ignored.
+     * @param e a keyboard event
+     */
     @Override
     public void keyReleased(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-            echoChar();
-        }
+        if (e.getSource().getClass().equals(javax.swing.JTextField.class)) {
+//            System.out.println("key release event from source " + e.getSource().getClass());
+            JTextField txtFieldSrc = (JTextField)e.getSource();
+            //this structure can be reduced. it was used during experimentation.
+            if (TXT_INPUT_NAME.equals(txtFieldSrc.getName()) && e.getKeyCode() == KeyEvent.VK_ENTER) {
+                System.out.println("key release event for enter");
+                echoChar();
+            }                        
+        }        
     }
 
+    /**
+     * Button click handler. The Submit button is an alternate path to submit
+     * a character for comparison with the automatically generated character.
+     * @param e button click event
+     */
     @Override
     public void actionPerformed(ActionEvent e) {        
         JButton btn = (JButton) e.getSource();        
@@ -184,31 +236,19 @@ public class RobotTester extends JFrame implements KeyListener, ActionListener {
         }
         
     }
+    /**
+     * Calls the RoboSteno to repeat the character that the user has typed
+     * into the input box. The output appears in the adjoining text field. The
+     * comparison is triggered by keyTyped event in the output box.
+     */
     private void echoChar() {    
 //        System.out.println("input text:" + txtInput.getText());
         txtOutput.requestFocusInWindow();
 //        typist.testAccent();
-        typist.type((char)txtInput.getText().codePointAt(0));
+//        typist.type((char)txtInput.getText().codePointAt(0));
+        typist.type(KeyMap_EN_US.getAsciiNumber(txtInput.getText()));
         
-        //wait for typing to be completed, then check
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                String inputChar = txtInput.getText().substring(0, 1);
-                //output box may be empty if the typist is slow
-                if (txtOutput.getText().length() > 0) {
-                    //simplify this to substring(0, 1), since output box is erased later?
-                    String robotOutput = txtOutput.getText().substring(txtOutput.getText().length()-1);
-    //                System.out.println("output window last char\t" + lastChar);                
-                    String testResult = "you typed " + inputChar + ". robot typed " + 
-                            robotOutput + ". do they match? " + inputChar.equals(robotOutput);
-    //                System.out.println(testResult);    
-                    txtTestResults.append(testResult + "\n");
-                }
-                txtInput.requestFocusInWindow();
-                txtInput.setText("");
-                txtOutput.setText("");
-            }
-        });       
+        //wait for typing to be completed, check in keyTyped event
+        
     }    
 }

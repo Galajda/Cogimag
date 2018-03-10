@@ -53,7 +53,7 @@ public class KeyEventTester extends JFrame implements KeyListener, ActionListene
     private static final String TXT_INPUT_NAME = "text field input"; 
     private JTextField txtOutput;    
     private static final String TXT_OUTPUT_NAME = "text field ouput";
-    private JScrollPane paneOutputContainer;    
+    private JScrollPane paneResultsContainer;    
     private JTextArea txtTestResults;
     
     private JSplitPane paneButtonContainer;    
@@ -132,9 +132,9 @@ public class KeyEventTester extends JFrame implements KeyListener, ActionListene
         
         txtTestResults = new JTextArea("Test results\n");
 //        txtTestResults.setEditable(false);
-        paneOutputContainer = new JScrollPane(txtTestResults);
-        paneOutputContainer.setPreferredSize(new Dimension(500,600));
-        getContentPane().add(paneOutputContainer, BorderLayout.CENTER);
+        paneResultsContainer = new JScrollPane(txtTestResults);
+        paneResultsContainer.setPreferredSize(new Dimension(500,600));
+        getContentPane().add(paneResultsContainer, BorderLayout.CENTER);
         
         btnSubmit = new JButton(KeyEventTester.BTN_SUBMIT_TEXT);
         btnSubmit.addActionListener(this);        
@@ -188,10 +188,11 @@ public class KeyEventTester extends JFrame implements KeyListener, ActionListene
 //        System.out.println("key press event for source " + ((JTextField)e.getSource()).getName());        
     }
     /**
-     * The character comparison test is started here. The method responds to
+     * The automatic key event is initiated here. The method responds to
      * the Enter key being pressed in the input text field, indicating that
      * the user has finished typing the character and wishes to submit it for
-     * testing against the automatically generated character. 
+     * testing against the automatically generated character. keyReleased
+     * events in other fields are ignored.
      * @param e a keyboard event
      */
     @Override
@@ -200,20 +201,9 @@ public class KeyEventTester extends JFrame implements KeyListener, ActionListene
         if (e.getSource().getClass().equals(javax.swing.JTextField.class)) {
 //            System.out.println("key release event from source " + e.getSource().getClass());
             JTextField txtFieldSrc = (JTextField)e.getSource();
-            //this structure can be reduced. it was used during experimentation.
-            switch (txtFieldSrc.getName()) {
-                case TXT_INPUT_NAME:
-                    //if user pressed enter in input box, process the keys
-                    if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                        System.out.println("key release event for enter");
-                        dispatchKeyEvent();
-                    }
-                    break;
-                case TXT_OUTPUT_NAME:
-                    
-//                    System.out.println("key release in output box. key code = " + e.getKeyCode());
-                    //this gives the the VK number
-                default:
+            if (TXT_INPUT_NAME.equals(txtFieldSrc.getName()) && e.getKeyCode() == KeyEvent.VK_ENTER) {
+                System.out.println("key release event for enter");
+                dispatchKeyEvent();
             }            
         }
     }
@@ -251,7 +241,5 @@ public class KeyEventTester extends JFrame implements KeyListener, ActionListene
         //change this to suit your custom key map
         System.out.println("input text content = " + txtInput.getText() + " length = " + txtInput.getText().length());
         KeyEventDispatcher.fireEvent(new KeyMap_EN_US(), KeyMap_EN_US.getAsciiNumber(txtInput.getText()));
-
-              
     }
 }

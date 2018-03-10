@@ -33,7 +33,12 @@ public class RoboSteno {
     
     /**
      * The robot must be linked to a KeyMap in order to look up the correct
-     * CharConstruction object.
+     * CharConstruction object. In contrast to the {@code KeyEventDispatcher},
+     * the map is passed to the constructor, rather than to a static method.
+     * Since the constructor is needed for other functions, the map may as well
+     * be passed here. Instantiating a new {@code Robot} for every typing event
+     * is deemed extravagant. The application may keep one instance of the 
+     * {@code RoboSteno} for the duration.
      * @param m the language-specific KeyMap to which characters will be 
      * matched
      */
@@ -72,6 +77,10 @@ public class RoboSteno {
     public void type(char c) {
         type(map.getCharCon(c));
     }
+    public void type(int ascii_number) {
+        type(map.getCharCon(ascii_number));
+    }
+    
     /**
      * Useful for typing longer texts.
      * @param s a String of unspecified length that will be broken up and typed
@@ -79,8 +88,40 @@ public class RoboSteno {
      */
     public void type(String s) {
         char[] charArray = s.toCharArray();
-        for (char c : charArray) {
-            type(map.getCharCon(c));
+        //cannot use enhanced for loop because I want to increment i within
+        //the loop when it encounters a \. I do not know how to increment
+        //an enhanced loop counter.
+        for (int i=0;i<s.length();i++) {
+            //when checking for \, must ensure that there is a char following the \
+            if ((i<(s.length()-1)) && (s.codePointAt(i)==Character.toString('\\').codePointAt(0))) {
+//                System.out.println("found an escape char");
+                //examine the letter following the \
+                switch (s.codePointAt(++i)) {
+                    case '\\':
+//                        type(((KeyMap)map).getAsciiNumber("\\"));
+                        type('\\');
+                        break;
+                    case 't':
+//                        type(((KeyMap)map).getAsciiNumber("\t"));
+                        type('\t');
+                        break;
+                    case 'n':
+//                        type(((KeyMap)map).getAsciiNumber("\n"));
+                        type('\n');
+                        break;
+                    case '"':
+//                        type(((KeyMap)map).getAsciiNumber("\""));
+                        type('\"');
+                        break;
+                    default:
+                        //throw error, or just plod on like JavaScript?
+                        //currently, the \ and the following char are ignored
+                        //if the following char is not one of the above
+                }
+            }
+            else {
+                type(map.getCharCon(s.codePointAt(i)));
+            }
         }
     }
     
