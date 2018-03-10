@@ -27,8 +27,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import javax.swing.JButton;
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -40,7 +40,9 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 /**
- *
+ * Repeats the user's input through either KeyEventDispatcher or RoboSteno. User
+ * may choose which typing method is employed. This class, specifically the
+ * {@link #repeatString} method may be used as an example of implementation.
  * @author MichalG HP Envy
  */
 public class StringTester extends JFrame implements KeyListener, ActionListener{
@@ -102,7 +104,7 @@ public class StringTester extends JFrame implements KeyListener, ActionListener{
      */
     private static void createAndShowGUI() {
         //Create and set up the window.
-        StringTester frame = new StringTester("Robot Map Tester");
+        StringTester frame = new StringTester("String Input Tester");
         
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
@@ -144,8 +146,6 @@ public class StringTester extends JFrame implements KeyListener, ActionListener{
         paneInputAndRadioContainer.setDividerLocation((double)0.5);
         getContentPane().add(paneInputAndRadioContainer, BorderLayout.PAGE_START);
         
-        
-        
         txtOutput = new JTextArea(TXT_OUTPUT_HEADER);
         txtOutput.setName(StringTester.TXT_OUTPUT_NAME);
 //        txtOutput.setEditable(false);
@@ -164,10 +164,7 @@ public class StringTester extends JFrame implements KeyListener, ActionListener{
     }
     
     /**
-     * The ASCII number can be obtained from the keyTyped event. However, 
-     * separating the actual key typed from the Enter key typed is a nuisance. 
-     * An alternative is to derive the ASCII number from the character in the 
-     * text field.
+     * Not used.
      * @param e key event
      */
     @Override
@@ -176,12 +173,19 @@ public class StringTester extends JFrame implements KeyListener, ActionListener{
 //        asciiNumber = Character.toString(e.getKeyChar()).codePointAt(0);
 //        System.out.println(" ascii number=" + Character.toString(e.getKeyChar()).codePointAt(0));
     }
-
+    /**
+     * Not used.
+     * @param e key event
+     */
     @Override
     public void keyPressed(KeyEvent e) {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    /**
+     * One way to trigger repeatString. When user typed Enter key in the input
+     * text field, {@link #repeatString()} is called.
+     * @param e key event
+     */
     @Override
     public void keyReleased(KeyEvent e) {        
         if (e.getSource().getClass().equals(javax.swing.JTextField.class)) {
@@ -192,16 +196,16 @@ public class StringTester extends JFrame implements KeyListener, ActionListener{
 //                System.out.println("key release event for enter");
                 repeatString();
             }                        
-        }        
-        
-        
+        }                
     }
-
+    /**
+     * Handles the Clear button and the Submit button. 
+     * @param e button-click event
+     */
     @Override
     public void actionPerformed(ActionEvent e) {        
         JButton btn = (JButton) e.getSource();        
-//        System.out.println("button text " + btn.getText());
-        
+//        System.out.println("button text " + btn.getText());        
         switch (btn.getText()) {
             case StringTester.BTN_CLEAR_TEXT:                
 //                System.out.println("btnClear click");                
@@ -214,19 +218,24 @@ public class StringTester extends JFrame implements KeyListener, ActionListener{
                 repeatString();
                 break;
             default:                
-        }
-        
+        }        
     }
+    /**
+     * Takes the contents of the input text field and sends them either to the
+     * {@link KeyEventDispatcher} or the {@link RoboSteno} for echo to the 
+     * output text area. 
+     */
     private void repeatString() {
         
         txtOutput.requestFocusInWindow();
         txtOutput.setCaretPosition(txtOutput.getDocument().getLength());
+        //there are only two radio buttons
         if (this.grpRadioGroup.getSelection().equals(this.rdoKeyEvent.getModel())) {
-            System.out.println("using key event");
+//            System.out.println("using key event");
             KeyEventDispatcher.fireEvent(new KeyMap_EN_US(), this.txtInput.getText());
         }
         else {
-            System.out.println("using robo steno");
+//            System.out.println("using robo steno");
             typist.type(txtInput.getText());
         }
         
