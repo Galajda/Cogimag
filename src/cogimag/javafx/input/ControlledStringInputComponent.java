@@ -17,14 +17,15 @@
 package cogimag.javafx.input;
 
 import javafx.event.Event;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextArea;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.StackPane;
+//import javafx.scene.control.TextField;
+//import javafx.scene.control.TextArea;
+//import javafx.scene.input.KeyCode;
+//import javafx.scene.input.KeyEvent;
+//import javafx.scene.layout.StackPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 /**
@@ -48,18 +49,18 @@ public class ControlledStringInputComponent extends VBox{
         comboBox.setPromptText("Choose a value");
         
         btnAdd = new Button("Add");
-        btnAdd.setOnAction(new EventHandler() {
+        btnAdd.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(Event event) {
+            public void handle(ActionEvent event) {
                 if (comboBox.getValue() != null) {                
                     lblResult.setText(lblResult.getText() + comboBox.getValue());
                 }
             }
         });
         btnClear = new Button("Clear");
-        btnClear.setOnAction(new EventHandler() {
+        btnClear.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(Event event) {
+            public void handle(ActionEvent event) {
                 lblResult.setText("");
             }
             
