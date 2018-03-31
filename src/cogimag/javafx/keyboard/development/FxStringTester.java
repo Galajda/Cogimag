@@ -74,7 +74,7 @@ public class FxStringTester extends Application {
         btnSubmitString.setOnAction(new EventHandler<ActionEvent>() {            
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("submit string via button");
+//                System.out.println("submit string via button");
 //                txtInputBox.clear();
                 txtOutputBox.requestFocus();
 //                System.out.println("get focus owner " + scene.getFocusOwner());
@@ -85,7 +85,7 @@ public class FxStringTester extends Application {
         btnClearFields.setOnAction(new EventHandler<ActionEvent>() {            
             @Override
             public void handle(ActionEvent event) {
-                System.out.println("clear fields");
+//                System.out.println("clear fields");
                 txtInputBox.clear();
                 txtOutputBox.clear();
                 txtInputBox.requestFocus();
