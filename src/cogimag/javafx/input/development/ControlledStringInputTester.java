@@ -19,6 +19,7 @@ package cogimag.javafx.input.development;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -28,8 +29,14 @@ import javafx.stage.Stage;
 
 import cogimag.javafx.input.ControlledStringInputComponent;
 
+//import cogimag.javafx.input.development.SplitStringComboBox;
+
+
 /**
- *
+ * Simple JavaFX window to demonstrate use of the {@link 
+ * ControlledStringInputComponent}. The component appears at the top, and an
+ * output is below, demonstrating the retrieval of the component's String.
+ * 
  * @author MichalG HP Envy
  */
 public class ControlledStringInputTester extends Application {
@@ -37,12 +44,14 @@ public class ControlledStringInputTester extends Application {
     private ControlledStringInputComponent inputComponent;
     private Button btnShowString;
     private Label lblOutput;
+//    private Label lblTestCboBox;
+//    private SplitStringComboBox testCboBox;
     private VBox mainContainer;
     @Override
     public void start(Stage primaryStage) {
         
         String[] choices = {"one", "two", "three", "\\n", "\\t"};        
-        inputComponent = new ControlledStringInputComponent("These are your choices", choices);
+        inputComponent = new ControlledStringInputComponent("These are your choices.\nLetters match first place only.", choices);
         
         btnShowString = new Button("Get the string");        
         btnShowString.setOnAction(new EventHandler<ActionEvent>() {            
@@ -52,6 +61,10 @@ public class ControlledStringInputTester extends Application {
             }
         });
         lblOutput = new Label("your output here");
+        
+//        lblTestCboBox = new Label("\ntest combo box with split display");
+//        testCboBox = new SplitStringComboBox(new String[] {"one", "two", "three", "four", "five", "sick", "sicks", "seven"});
+        
         
         mainContainer = new VBox();
         mainContainer.getChildren().addAll(inputComponent.getComponent(), btnShowString, lblOutput);

@@ -42,7 +42,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 /**
  * Repeats the user's input through either AwtKeyEventSteno or AwtRoboSteno. User
  * may choose which typing method is employed. This class, specifically the
- * {@link #repeatString} method may be used as an example of implementation.
+ * {@link #repeatString} method may be used as an example of implementation of
+ * the two stenos.
  * @author MichalG HP Envy
  */
 public class AwtStringTester extends JFrame implements KeyListener, ActionListener{
@@ -51,7 +52,7 @@ public class AwtStringTester extends JFrame implements KeyListener, ActionListen
     private static final String TXT_INPUT_NAME = "text field input"; 
     private JPanel panelRadioContainer;
     private JRadioButton rdoKeyEvent;
-    private static final String TXT_RDO_KEY_EVENT = "Use key event dispatcher";
+    private static final String TXT_RDO_KEY_EVENT = "Use key event steno";
     private JRadioButton rdoRoboSteno;
     private static final String TXT_RDO_ROBO_STENO = "Use robo steno";
     private ButtonGroup grpRadioGroup;
@@ -182,8 +183,8 @@ public class AwtStringTester extends JFrame implements KeyListener, ActionListen
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     /**
-     * One way to trigger repeatString. When user typed Enter key in the input
-     * text field, {@link #repeatString()} is called.
+     * One way to trigger repeatString. When user types Enter key in the input
+     * text field, {@link #repeatString} is called.
      * @param e key event
      */
     @Override
@@ -238,6 +239,15 @@ public class AwtStringTester extends JFrame implements KeyListener, ActionListen
 //            System.out.println("using robo steno");
             typist.type(txtInput.getText());
         }
+//      //wait until key events are done before clearing the text field
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                txtInput.requestFocusInWindow();
+                txtInput.setText("");
+                txtOutput.append("\n");
+            }                    
+        });  
         
     }
 }

@@ -18,7 +18,7 @@ package cogimag.java.keyboard;
 
 /**
  * Object contains three primitives that identify printable characters. Supports
- * automated typing utilities {@link RoboSteno} and {@link KeyEventDispatcher}.
+ * automated typing utilities {@link AwtRoboSteno} and {@link AwtKeyEventSteno}.
  * @author Michal G.
  */
 public class AwtCharConstruction {

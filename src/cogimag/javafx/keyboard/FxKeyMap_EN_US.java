@@ -151,7 +151,6 @@ public class FxKeyMap_EN_US extends FxKeyMap {
         return map;
     }
     
-    
     @Override
     public FxCharConstruction getCharCon(char c) {
         return FxKeyMap_EN_US.KEY_MAP.get(Character.toString(c).codePointAt(0));

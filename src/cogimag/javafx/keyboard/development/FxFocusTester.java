@@ -38,6 +38,8 @@ import cogimag.javafx.keyboard.FxKeyMap_EN_US;
  * Used to gather information on the behavior of key events when application
  * focus changes. It seems that the event queue acts only when the native 
  * application is the active window.
+ * @deprecated The test has served its purpose of clarifying the function of
+ * key events. It ought to be discarded.
  * @author MichalG HP Envy
  */
 public class FxFocusTester extends Application {

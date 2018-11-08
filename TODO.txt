@@ -1,3 +1,15 @@
 delete junk folder
 
 handle illegal character errors
+
+FilteredFxComboBox highlight the chars of the selection that are used to filter
+	each line is a combination of two text fields.
+	the first text field has blue background and white text, contains the fragment of the string that matches the filter string
+	the second text field has white background and black text, contains the remainder of the string
+
+	problem: set prompt text is overridden
+	help with combo box
+	https://docs.oracle.com/javase/8/javafx/user-interface-tutorial/combo-box.htm
+	https://stackoverflow.com/questions/12166227/javafx-combobox-to-select-line-styles
+	https://docs.oracle.com/javafx/2/api/javafx/scene/control/ListCell.html
+	https://docs.oracle.com/javafx/2/api/index.html

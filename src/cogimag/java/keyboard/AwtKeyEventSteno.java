@@ -31,8 +31,13 @@ import javax.swing.SwingUtilities;
  * @author MichalG HP Envy
  */
 public class AwtKeyEventSteno {
+    /**
+     * Initiates a java.util.KeyEvent by posting the event to the EventQueue.
+     * @param map the map from which characters will be retrieved
+     * @param ascii_number the ASCII decimal number of the character to be typed
+     */
     public static void fireEvent(AwtKeyMap map, int ascii_number) {
-        Thread thisThread = Thread.currentThread();
+//        Thread thisThread = Thread.currentThread();
 //        System.out.println("firing key event on thread " + thisThread);
 //        System.out.println("is event queue the dispatch thread? " + EventQueue.isDispatchThread());
 //        System.out.println("current event in event queue = " + EventQueue.getCurrentEvent());
@@ -56,13 +61,13 @@ public class AwtKeyEventSteno {
         AwtCharConstruction charCon = map.getCharCon(ascii_number);
         if (EventQueue.isDispatchThread()) {
 //        if (true) {
-            System.out.println("on dispatch thread");    
+//            System.out.println("on dispatch thread");    
             List<KeyEvent> events = new ArrayList<>();
             events.clear();
             int modifier = (charCon.isShifted) ? (KeyEvent.VK_SHIFT) : 0;            
             KeyEvent ke;
             //SO 720208
-            System.out.println("is focus owner null? " + (KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner() == null));
+//            System.out.println("is focus owner null? " + (KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner() == null));
 //            System.out.println("focus owner " + KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner().toString());
 //            ke = new KeyEvent(KeyboardFocusManager.getCurrentKeyboardFocusManager().getFocusOwner(),
 //                    KeyEvent.KEY_PRESSED,System.currentTimeMillis(),modifier,charCon.keyEventConstant,charCon.rendering.charAt(0));
@@ -77,7 +82,7 @@ public class AwtKeyEventSteno {
             ke = new KeyEvent(new javax.swing.JPanel(),KeyEvent.KEY_TYPED,System.currentTimeMillis(),modifier,KeyEvent.VK_UNDEFINED,charCon.rendering.charAt(0));
             events.add(ke);            
             for (KeyEvent event : events) {
-                System.out.println("posting event for key code " + event.getKeyCode());
+//                System.out.println("posting event for key code " + event.getKeyCode());
                 Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(event);                
             }
             
@@ -101,6 +106,13 @@ public class AwtKeyEventSteno {
             }
         }
     }
+    /**
+     * Convenience method for typing an entire String at once. This method
+     * handles sequencing of characters, interpretation of escaped characters.
+     * @param map the map from which characters will be retrieved
+     * @param s the String of characters to be typed automatically
+     * @see #fireEvent(cogimag.java.keyboard.AwtKeyMap, int) 
+     */
     public static void fireEvent(AwtKeyMap map, String s) {
         for (int i=0;i<s.length();i++) {
             //when checking for \, ensure that there is a char following the \

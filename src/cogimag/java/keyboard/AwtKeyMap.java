@@ -16,14 +16,14 @@
  */
 package cogimag.java.keyboard;
 
-import java.awt.event.KeyEvent;
 import java.util.HashMap;
 
 /**
  * Base class for language-specific subclasses of the keyboard mapping. Do not
  * use this class directly. Contains a single object, a {@link HashMap} that 
  * simplifies programmed typing of letters in any editable text input field on 
- * the client's screen. 
+ * the client's screen. Intended for use with {@link AwtKeyEventSteno}
+ * or {@link AwtRoboSteno}.
  * @author MichalG HP Envy
  */
 public abstract class AwtKeyMap {
@@ -64,7 +64,7 @@ public abstract class AwtKeyMap {
      * Base method throws {@code NullPointerException} because map is empty
      * @param c a single {@code char} from the range of printable characters
      * @return in subclasses, the AwtCharConstruction corresponding to the input 
- character, null or other as the designer wishes in the case of no match
+     * character, null or other as the designer wishes in the case of no match
      * @throws java.lang.NullPointerException always because the base map is 
      * empty
      */
@@ -77,7 +77,7 @@ public abstract class AwtKeyMap {
      * Subclasses may decide how to handle value not found case.
      * @param ascii_code an {@code int} from the range of printable characters
      * @return the AwtCharConstruction corresponding to the input number, null or 
- other as the designer wishes in the case of no match
+     * other as the designer wishes in the case of no match
      * @throws java.lang.NullPointerException always because the base map is
      * empty
      */
@@ -92,17 +92,12 @@ public abstract class AwtKeyMap {
      * unit long, in the case of letters, numbers and punctuation, or may be
      * two units long, in the case of escaped chars \n, \t, \\, \"
      * @return an ASCII decimal number for the character if the character
-     * meets the criteria, 0 otherwise
+     * meets the criteria, 0 otherwise     
      */
     public static int getAsciiNumber(String one_char) {
         switch (one_char.length()) {
-//            case 0:
-//                //assume enter key. cr or lf?
-//                return 13;
-
             case 1:
-                //TODO: ensure normal char
-                
+                //TODO: ensure normal char                
 //                System.out.println("firing event for single char");
                 return one_char.codePointAt(0);
             case 2:

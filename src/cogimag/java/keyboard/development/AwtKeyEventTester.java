@@ -38,13 +38,15 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  * Tests the AwtKeyMap_EN_US by looking up in the HashMap a character that the user
- types into the input box and repeating this character to the output box through 
- java.awt.event.KeyEvent. In order to adapt the tester to other key maps, the 
- user may alter the call to AwtKeyEventSteno.fireEvent in dispatchKeyEvent 
- to take a custom key map as an argument.<br>
- * Known issue: main throws StringIndexOutOfBoundsException if user presses Enter
- * when the input box is empty. There is no plan to fix this bug. The class is 
- * intended for development use only.
+ * types into the input box and repeating this character to the output box through 
+ * java.awt.event.KeyEvent. The text field displays the result of comparing
+ * input and output. In order to adapt the tester to other key maps, the 
+ * user may alter the call to AwtKeyEventSteno.fireEvent in dispatchKeyEvent 
+ * to take a custom key map as an argument.<br>
+ * Known issues: Main throws StringIndexOutOfBoundsException if user presses Enter
+ * when the input box is empty. Main throws NullPointerException if the user 
+ * enters more than one character (escape characters excepted). There is no plan
+ * to fix these bugs. The class is intended for development use only.
  * @author MichalG HP Envy
  */
 public class AwtKeyEventTester extends JFrame implements KeyListener, ActionListener {
@@ -98,7 +100,7 @@ public class AwtKeyEventTester extends JFrame implements KeyListener, ActionList
      */
     private static void createAndShowGUI() {
         //Create and set up the window.
-        AwtKeyEventTester frame = new AwtKeyEventTester("KeyEvent Map Tester");
+        AwtKeyEventTester frame = new AwtKeyEventTester("Awt KeyEvent Map Tester");
         
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
@@ -233,7 +235,8 @@ public class AwtKeyEventTester extends JFrame implements KeyListener, ActionList
     }
     /**
      * Initiates a KeyEvent corresponding to the character that the user has
-     * typed into the input text field.
+     * typed into the input text field. The event is directed at the output text
+     * field.
      */
     private void dispatchKeyEvent() {
 //        System.out.println("dispatching key event for ascii number " + txtInput.getText().codePointAt(0));

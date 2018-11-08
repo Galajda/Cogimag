@@ -18,10 +18,6 @@ package cogimag.javafx.keyboard;
 
 import java.util.HashMap;
 import javafx.scene.input.KeyCode;
-//import cogimag.javafx.keyboard.FxCharConstruction;
-
-
-
 /**
  * Base class for language-specific subclasses of the keyboard mapping. Do not
  * use this class directly. Contains a single object, a {@link HashMap} that 
@@ -30,11 +26,11 @@ import javafx.scene.input.KeyCode;
  * @author MichalG HP Envy
  */
 public abstract class FxKeyMap {
-    /**
+/**
  * A map of all the ASCII printable characters. Key is the ASCII code for the 
- character. Value is a FxCharConstruction object containing the details of that 
- character's construction--its text representation, the base key used to type 
- it and a flag if Shift must be pressed in conjunction.
+ * character. Value is a FxCharConstruction object containing the details of that 
+ * character's construction--its text representation, the base key used to type 
+ * it and a flag if Shift must be pressed in conjunction.
  */
     public static final HashMap<Integer, FxCharConstruction> KEY_MAP = makeMap();
     
@@ -47,28 +43,26 @@ public abstract class FxKeyMap {
         HashMap<Integer, FxCharConstruction> map = new HashMap<>();
         
         //add these to the statements from MapGenerator
-//        map.put(10, new FxCharConstruction("\n", KeyEvent.VK_ENTER, false));
-//        map.put(9, new FxCharConstruction("\t", KeyEvent.VK_TAB, false));
-//        map.put(92, new FxCharConstruction("\\", KeyEvent.VK_BACK_SLASH, false));
-//        map.put(34, new FxCharConstruction("\"", KeyEvent.VK_QUOTE, true));
-        
+//        map.put(10, new FxCharConstruction("\n", "\n", KeyCode.ENTER, false));
+//        map.put(9, new FxCharConstruction("\t", "\t", KeyCode.TAB, false));
+        //correct these lines from MapGenerator
+//        map.put(124, new FxCharConstruction("|", "\\", KeyCode.BACK_SLASH, true));
+//        map.put(34, new FxCharConstruction("\"", "'", KeyCode.QUOTE, true));
         
         return map;
     }
     /**
      * Constructor does nothing. KeyMap instance is used to transfer map
- identity between classes. In one imagined case, an application may 
- record the map identity in its settings, and pass this to the RoboSteno,
- which will retrieve FxCharConstruction information from the correct map.
+     * identity between classes. In one imagined case, an application may 
+     * record the map identity in its settings, and pass this to the RoboSteno,
+     * which will retrieve FxCharConstruction information from the correct map.
      */
-    public FxKeyMap() {
-        
-    }
+    public FxKeyMap() { }
     /**
      * Base method throws {@code NullPointerException} because map is empty
      * @param c a single {@code char} from the range of printable characters
      * @return in subclasses, the FxCharConstruction corresponding to the input 
- character, null or other as the designer wishes in the case of no match
+     * character, null or other as the designer wishes in the case of no match
      * @throws java.lang.NullPointerException always because the base map is 
      * empty
      */
@@ -81,7 +75,7 @@ public abstract class FxKeyMap {
      * Subclasses may decide how to handle value not found case.
      * @param ascii_code an {@code int} from the range of printable characters
      * @return the FxCharConstruction corresponding to the input number, null or 
- other as the designer wishes in the case of no match
+     * other as the designer wishes in the case of no match
      * @throws java.lang.NullPointerException always because the base map is
      * empty
      */
@@ -97,32 +91,27 @@ public abstract class FxKeyMap {
      * two units long, in the case of escaped chars \n, \t, \\, \"
      * @return an ASCII decimal number for the character if the character
      * meets the criteria, 0 otherwise
+     
      */
     public static int getAsciiNumber(String one_char) {
         switch (one_char.length()) {
-//            case 0:
-//                //assume enter key. cr or lf?
-//                return 13;
-
             case 1:
-                //TODO: ensure normal char
-                
-//                System.out.println("firing event for single char");
+                //TODO: ensure normal char                
                 return one_char.codePointAt(0);
             case 2:
                 //escaped char
                 switch (one_char.charAt(1)) {
                     case 't':
-                        System.out.println("esc t");
+//                        System.out.println("esc t");                        
                         return 9;
                     case 'n':
-                        System.out.println("esc n");
+//                        System.out.println("esc n");
                         return 10;
                     case '\\':
-                        System.out.println("esc backslash");
+//                        System.out.println("esc backslash");
                         return 92;
                     case '\"':
-                        System.out.println("esc dbl quote");
+//                        System.out.println("esc dbl quote");
                         return 34;
                     default:
                         return 0;

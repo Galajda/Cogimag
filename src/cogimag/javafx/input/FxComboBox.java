@@ -22,39 +22,43 @@ import javafx.scene.input.KeyEvent;
 /**
  * A subclass of the ComboBox. All normal features of the ComboBox are supported.
  * The extra feature matches the user's keypress with the selection.
- * Credit to Stack Overflow 13362607
+ * Credit to 
+ * <a href="https://stackoverflow.com/questions/13362607/combobox-jump-to-typed-char/13372302">
+ * Stack Overflow 13362607</a>
  * @author Michal G. 
  */
 public class FxComboBox extends ComboBox<String> {
     /**
-     * Zero-argument constructor sets key release handler
+     * Zero-argument constructor sets key release handler. Combo box contents
+     * must be set separately through {@code super.getItems().addAll()}
      */
     public FxComboBox() {
         super();
-        super.setOnKeyPressed(e -> comboBoxKeyboardShortcut(e));
+        super.setOnKeyPressed(e -> matchKey(e));
     }
     /**
-     * The combo box may be initialized with the values of the options.
+     * The combo box may be initialized with the values of the options, sent as
+     * a {@code Collection<>}.
      * @param items the String Collection of options in the combo box
      */
     public FxComboBox(Collection<String> items) {
         super();
         super.getItems().addAll(items);
-        super.setOnKeyPressed(e -> comboBoxKeyboardShortcut(e));
+        super.setOnKeyPressed(e -> matchKey(e));
     }
     /**
-     * More accessible constructor using String array
-     * @param items a String array is perhaps more convenient than a Collection
+     * More accessible constructor using String array for the combo box options.
+     * @param items a String array, which may be more convenient than a Collection.
      */
     public FxComboBox(String[] items) {
         super();
         super.getItems().addAll(items);
-        super.setOnKeyPressed(e -> comboBoxKeyboardShortcut(e));
+        super.setOnKeyPressed(e -> matchKey(e));
     }
     
-    
     /**
-     * The combo box may be initialized with an id and the Collection of option values.
+     * The combo box may be initialized with an id and the Collection of option
+     * values.
      * @param control_id the id of this instance of the combo box control
      * @param items the String Collection of options in the combo box
      */
@@ -62,16 +66,27 @@ public class FxComboBox extends ComboBox<String> {
         super();
         super.getItems().addAll(items);
         super.setId(control_id);
-        super.setOnKeyPressed(e -> comboBoxKeyboardShortcut(e));
+        super.setOnKeyPressed(e -> matchKey(e));
     }
+        /**
+     * The combo box may be initialized with an id and the String array of option
+     * values.
+     * @param control_id the id of this instance of the combo box control
+     * @param items the String array of options in the combo box
+     */
     public FxComboBox(String control_id, String[] items) {
         super();
         super.getItems().addAll(items);
         super.setId(control_id);
-        super.setOnKeyPressed(e -> comboBoxKeyboardShortcut(e));
+        super.setOnKeyPressed(e -> matchKey(e));
     }
-    
-    private void comboBoxKeyboardShortcut(KeyEvent e) {
+    /**
+     * Handles keystrokes in the combo box, matching the letter with the first
+     * letter of the combo box values. Subsequent presses cycle through the 
+     * values, rather than filtering or refining the selection.
+     * @param e key pressed event in the combo box
+     */
+    private void matchKey(KeyEvent e) {
 //        System.out.println("handling a key press event in the private handler");
         //replace this search with startsWith()
         int firstMatchLocation = (this.getSelectionModel().getSelectedIndex() < 0) ? 
@@ -97,12 +112,6 @@ public class FxComboBox extends ComboBox<String> {
                 }
             }
         }
-//        e.consume();
-        
-        
-        
+//        e.consume();        
     }
-    
-    
-    
 }

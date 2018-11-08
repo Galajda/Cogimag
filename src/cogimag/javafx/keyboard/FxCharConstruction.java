@@ -18,13 +18,34 @@ package cogimag.javafx.keyboard;
 
 import javafx.scene.input.KeyCode;
 /**
- *
+ * 
+ * Object contains four primitives that identify printable characters. Supports
+ * automated typing utility {@link FxKeyEventSteno}. Because that class uses
+ * {@link javafx.scene.input.KeyEvent}, this object collects the parameters
+ * needed to construct a {@code KeyEvent} and fire it via {@link javafx.event.Event}.
+ * The field variables are final, being set once in the constructor and accessed
+ * (read-only) directly thereafter.
  * @author MichalG HP Envy
  */
 public class FxCharConstruction {
+    /**
+     * the appearance of the character on the screen, such as a, A, 1, !
+     */
     public final String displayedCharacter;
+    /**
+     * The String representation of the FX KeyCode, such as a or 1.
+     * @see javafx.scene.input.KeyCode
+     */
     public final String strKeyCode;
+    /**
+     * The KeyCode enum of the key, such as KeyCode.A or KeyCode.DIGIT1
+     * @see javafx.scene.input.KeyCode
+     */
     public final KeyCode intKeyCode;
+    /**
+     * true if shift must be pressed in combination with the base key to get 
+     * the rendering 
+     */
     public final boolean isShifted;
     
     public FxCharConstruction(String char_representation, String key_code_string, KeyCode key_code_int, boolean is_shifted) {

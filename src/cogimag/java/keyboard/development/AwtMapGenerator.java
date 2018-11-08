@@ -47,21 +47,22 @@ import javax.swing.UnsupportedLookAndFeelException;
  * captures the 
  * <a href="https://docs.oracle.com/javase/8/docs/api/constant-values.html#java.awt.event.KeyEvent.CHAR_UNDEFINED">
  * java.awt.event.KeyEvent.VK_ code</a>
- as an integer and checks the status of the shift key (is this character on the 
- first level of the keyboard, or must the user press shift to obtain it, as for
- upper-case letters?). The keyTyped event captures the ASCII number of the
- displayed character and its String representation. With these four parameters,
- an entry in the AwtKeyMap HashMap can be constructed. For readability, the VK_
- integer is converted into its class name, e.g., KeyEvent.VK_A. The developer 
- may press every printable character on the local keyboard, obtaining a complete
- list of the AwtKeyMap entries needed to read and type the characters on the client's
- keyboard. The built-in AwtKeyMap_EN_US class contains such a list for the US-English
- QWERTY keyboard. If the client uses a different keyboard, the developer may 
- extend the built-in class and hide the makeMap method with a new method 
- containing the client's keyboard map.<br>
- * Known issue: " and \ need escape char. Currently this must be fixed manually
+ * as an integer and checks the status of the shift key (is this character on the 
+ * first level of the keyboard, or must the user press shift to obtain it, as for
+ * upper-case letters?). The keyTyped event captures the ASCII number of the
+ * displayed character and its String representation. With these four parameters,
+ * an entry in the AwtKeyMap HashMap can be constructed. For readability, the VK_
+ * integer is converted into its class name, e.g., KeyEvent.VK_A. The developer 
+ * may press every printable character on the local keyboard, obtaining a complete
+ * list of the AwtKeyMap entries needed to read and type the characters on the 
+ * client's keyboard. The built-in AwtKeyMap_EN_US class contains such a list
+ * for the US-English QWERTY keyboard. If the client uses a different keyboard,
+ * the developer may extend the built-in class and hide the makeMap method with
+ * a new method containing the client's keyboard map.<br>
+ * Known issue: " and \ need escape backslashes. This must be fixed manually
  * after the put statements are generated.<br>
- * Known issue: The newline character has not been considered.<br><br>
+ * Known issue: The put statements for newline and tab must be added manually.
+ * <br><br>
  * Adapted from KeyEventDemo.java (attached) by Oracle. Read the full article  at 
  * <a href="https://docs.oracle.com/javase/tutorial/uiswing/events/keylistener.html">
  * Oracle key listener tutorial</a>
@@ -132,7 +133,7 @@ public class AwtMapGenerator extends JFrame implements KeyListener, ActionListen
      */
     private static void createAndShowGUI() {
         //Create and set up the window.
-        AwtMapGenerator frame = new AwtMapGenerator("KeyEvent Mapper");
+        AwtMapGenerator frame = new AwtMapGenerator("Awt key map generator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         //Set up the content pane.
@@ -140,6 +141,7 @@ public class AwtMapGenerator extends JFrame implements KeyListener, ActionListen
         
         //Display the window.
         frame.pack();
+        frame.setBounds(700, 50, 400, 500);
         frame.setVisible(true);
     }
     private AwtMapGenerator(String app_title) {
@@ -165,7 +167,11 @@ public class AwtMapGenerator extends JFrame implements KeyListener, ActionListen
         paneButtonContainer = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,btnClear,btnCopy);
         getContentPane().add(paneButtonContainer, BorderLayout.PAGE_END);
     }
-    
+    /**
+     * The key code (VK number) and the modifier (Shift) are caught in the key
+     * press event.
+     * @param e key press event
+     */
     @Override
     public void keyPressed(KeyEvent e) {
 //        System.out.println("key press event");
@@ -175,7 +181,13 @@ public class AwtMapGenerator extends JFrame implements KeyListener, ActionListen
             isShifted = ("Shift".equals(KeyEvent.getModifiersExText(e.getModifiersEx())));
         }        
     }
-
+    /**
+     * The string representation of the character is obtained when a key typed
+     * event fires. This completes the information needed to construct a
+     * CharConstruction object for the keystroke. A map.put statement is formatted
+     * and printed to the output text area.
+     * @param e key typed event
+     */
     @Override
     public void keyTyped(KeyEvent e) {
 //        System.out.println("key typed event");        
@@ -187,14 +199,18 @@ public class AwtMapGenerator extends JFrame implements KeyListener, ActionListen
         txtOutput.append(mapGen + "\n");
         txtOutput.setCaretPosition(txtOutput.getDocument().getLength());
     }
-
+    /**
+     * This event is not used. It is implemented to satisfy the rules of the
+     * KeyListener interface.
+     * @param e key release event
+     */
     @Override
     public void keyReleased(KeyEvent e) {
 //        System.out.println("key release event");
     }
 
     /**
-     * Button click listener
+     * Button click listener. Method handles the Clear and Copy buttons.
      * @param e button click event
      */
     @Override
@@ -216,7 +232,8 @@ public class AwtMapGenerator extends JFrame implements KeyListener, ActionListen
         }
         txtInput.requestFocusInWindow();
     }
-    public static String formatMapPut(int ascii_number, AwtCharConstruction char_con) {
+    
+    private static String formatMapPut(int ascii_number, AwtCharConstruction char_con) {
         //TODO: check for escape chars
         StringBuilder sb = new StringBuilder();
         sb.append("map.put(");
@@ -235,7 +252,7 @@ public class AwtMapGenerator extends JFrame implements KeyListener, ActionListen
     }
     /**
      * Runs through all fields of the KeyEvent class, seeking a match of the 
-     * integer values.
+     * supplied integer value.
      * @param vkValueToMatch the integer value for which the VK_ constant name
      * is to be found
      * @return the String form of the VK_ constant name, such as VK_A, null if

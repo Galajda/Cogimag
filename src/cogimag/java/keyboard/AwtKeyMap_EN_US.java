@@ -25,13 +25,15 @@ import java.awt.event.KeyEvent;
  */
 public class AwtKeyMap_EN_US extends AwtKeyMap {    
     /**    
-     * Intentionally hides the HashMap of the parent class
+     * Intentionally hides the HashMap of the parent class. Contains a map
+     * of integer ASCII codes to their respective AwtCharConstruction objects.
      */    
     public static final HashMap<Integer, AwtCharConstruction> KEY_MAP = makeMap();
     /**
-     * Put statements must be pasted manually using the MapGenerator tool.
+     * Put statements must be pasted manually using the 
+     * {@link cogimag.java.keyboard.development.AwtMapGenerator} tool.
      * Credit for static initializer technique to SO 6802483 and 26999663. 
-     * @return KEY_MAP     
+     * @return {@link #KEY_MAP}
      */
     public static HashMap<Integer, AwtCharConstruction> makeMap() {
 //        System.out.println("en-us static method");        

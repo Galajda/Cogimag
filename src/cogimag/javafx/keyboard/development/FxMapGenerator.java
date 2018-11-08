@@ -18,15 +18,9 @@ package cogimag.javafx.keyboard.development;
 
 
 import javafx.application.Application;
-//import javafx.event.ActionEvent;
-//import javafx.event.
 import javafx.event.Event;
-//import javafx.event.EventDispatchChain;
-//import javafx.event.EventDispatcher;
-//import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.scene.Scene;
-
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -36,7 +30,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-
 import javafx.stage.Stage;
 
 
@@ -49,15 +42,11 @@ public class FxMapGenerator extends Application {
     Label lblInstructions;
     TextField txtInputBox;
     TextArea txtOutputBox;
-//    Label lblQueueStatus;
-    
     Button btnClearFields;
-//    Button btnStopTimer;
     Button btnCopyOutput;
     VBox mainContainer;
     HBox buttonContainer;
-//    long startTime;
-    
+
     private int asciiNumber;
     private String characterRepresentation;
     private String keyCodeString;
@@ -87,7 +76,6 @@ public class FxMapGenerator extends Application {
         
         mainContainer.getChildren().addAll(lblInstructions, txtInputBox, txtOutputBox, buttonContainer);
         StackPane root = new StackPane();
-//        root.getChildren().add(btn);
         root.getChildren().add(mainContainer);
         Scene scene = new Scene(root, 600, 400);
         
@@ -104,8 +92,6 @@ public class FxMapGenerator extends Application {
     }
     private void txtInputBox_KeyPressed(Event e) {
         System.out.println("key press in input field");
-        
-        
         
     }
     private void txtInputBox_KeyTyped(Event e) {

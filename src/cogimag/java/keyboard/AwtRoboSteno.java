@@ -33,14 +33,15 @@ public class AwtRoboSteno {
     
     /**
      * The robot must be linked to a AwtKeyMap in order to look up the correct
- AwtCharConstruction object. In contrast to the {@code KeyEventDispatcher},
+     * AwtCharConstruction object. In contrast to the {@link AwtKeyEventSteno},
      * the map is passed to the constructor, rather than to a static method.
-     * Since the constructor is needed for other functions, the map may as well
+     * Since the constructor is needed for other reasons, the map may as well
      * be passed here. Instantiating a new {@code Robot} for every typing event
      * is deemed extravagant. The application may keep one instance of the 
-     * {@code RoboSteno} for the duration.
+     * {@code RoboSteno} for the duration. A 10ms delay between keystrokes is
+     * built in.
      * @param m the language-specific AwtKeyMap to which characters will be 
- matched
+     * matched
      */
     public AwtRoboSteno(AwtKeyMap m) {
         map = m;
@@ -59,11 +60,12 @@ public class AwtRoboSteno {
      * characters on the screen. Method checks for availability of the Robot. 
      * If offline, no chars are typed, no Exception is thrown.
      * @param charCon the AwtCharConstruction object representing the character
- to be typed
+     * to be typed
      */
     public void type(AwtCharConstruction charCon) {
         if (isRobotOnline) {            
-            System.out.println("robot is typing on thread " + Thread.currentThread());
+//            System.out.println("robot is typing key " + charCon.rendering);
+//            System.out.println(" on thread " + Thread.currentThread());
             if (charCon.isShifted) { r.keyPress(KeyEvent.VK_SHIFT); }
             r.keyPress(charCon.keyEventConstant);
             r.keyRelease(charCon.keyEventConstant);
@@ -78,6 +80,11 @@ public class AwtRoboSteno {
     public void type(char c) {
         type(map.getCharCon(c));
     }
+    /**
+     * Alternate argument type, depending on the designer's preference
+     * @param ascii_number the decimal number of the character, taken from
+     * the ASCII table
+     */
     public void type(int ascii_number) {
         type(map.getCharCon(ascii_number));
     }
@@ -88,6 +95,7 @@ public class AwtRoboSteno {
      * one letter at at time.
      */
     public void type(String s) {
+//        System.out.println("robo steno type string got string:" + s + ":");
         char[] charArray = s.toCharArray();
         //cannot use enhanced for loop because I want to increment i within
         //the loop when it encounters a \. I do not know how to increment
@@ -121,7 +129,13 @@ public class AwtRoboSteno {
                 }
             }
             else {
-                type(map.getCharCon(s.codePointAt(i)));
+//                System.out.println("code point at " + i + " = " + s.codePointAt(i) );                
+                try {
+                    type(map.getCharCon(s.codePointAt(i)));
+                }
+                catch (NullPointerException ex) {
+                    //skip the char
+                }
             }
         }
     }

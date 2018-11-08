@@ -31,16 +31,18 @@
 
 package cogimag.java.keyboard.development;
 
-/*
-* AwtKeyEventDemo
-*/
 
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.*;
 import javax.swing.*;
-
+/**
+ * Copied from Oracle tutorial. Swing window displays key codes, key characters
+ * and modifiers when user presses keys on the keyboard.
+ * events.
+ * @author Oracle
+ */
 public class AwtKeyEventDemo extends JFrame
         implements KeyListener,
         ActionListener

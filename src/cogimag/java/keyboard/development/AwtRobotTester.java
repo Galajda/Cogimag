@@ -35,14 +35,18 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 /**
- * Tests the AwtKeyMap_EN_US by looking up in the HashMap a character that the user
- types into the input box and repeating this character to the output box through 
- java.awt.Robot. In order to adapt the tester to other key maps, the user may
- * alter the constructor to take a custom key map as an argument.<br>
- * Known issue: Does not work with Caps Lock. <br>
- * Known issue: main throws StringIndexOutOfBoundsException if user presses Enter
- * when the input box is empty. There is no plan to fix these bugs. The class is
- * intended for development use only.
+ * Tests the AwtKeyMap_EN_US by looking up in the HashMap a character that the 
+ * user types into the input box and repeating this character to the output box
+ * through java.awt.Robot. The result of the comparison is shown in a text area.
+ * In order to adapt the tester to other key maps, the user may alter the 
+ * constructor to take a custom key map as an argument.<br>
+ * Known issues: <ul>
+ * <li>Does not work with Caps Lock. </li>
+ * <li>Main throws StringIndexOutOfBoundsException if user presses Enter when 
+ * the input box is empty. </li> <li>The test is not performed if multiple 
+ * characters are submitted. To test strings, try {@link AwtStringTester}.</li>
+ * <li>There is no plan to fix these bugs. The class is
+ * intended for development use only.</li></ul>
  * @author MichalG HP Envy
  */
 public class AwtRobotTester extends JFrame implements KeyListener, ActionListener {
@@ -148,7 +152,7 @@ public class AwtRobotTester extends JFrame implements KeyListener, ActionListene
      * 
      * The comparison between the user input and the automated output is done 
      * in this event. Used exclusively to catch events from the output text 
-     * field, where the {@code KeyEventDispatcher} sends events. Key typed 
+     * field, where the {@link AwtRoboSteno} sends events. Key typed 
      * events from other text fields are ignored. The ASCII number can be 
      * obtained from the keyTyped event. However, separating the actual key 
      * typed from the Enter key typed is a nuisance. An alternative is to derive
@@ -238,7 +242,7 @@ public class AwtRobotTester extends JFrame implements KeyListener, ActionListene
     }
     /**
      * Calls the AwtRoboSteno to repeat the character that the user has typed
- into the input box. The output appears in the adjoining text field. The
+     * into the input box. The output appears in the adjoining text field. The
      * comparison is triggered by keyTyped event in the output box.
      */
     private void echoChar() {    

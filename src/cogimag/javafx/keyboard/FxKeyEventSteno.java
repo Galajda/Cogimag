@@ -21,11 +21,19 @@ import javafx.event.EventTarget;
 //import javafx.scene.control.FocusModel;
 import javafx.scene.input.KeyEvent;
 /**
- *
+ * An automated typing utility to fire key events in specific JavaFX components.
+ * Adapted from {@link cogimag.java.keyboard.AwtKeyEventSteno} for the JavaFX architecture.
  * @author MichalG HP Envy
  */
 public class FxKeyEventSteno {
-    
+    /**
+     * Initiates a {@code javafx.event.Event} corresponding the the given 
+     * parameters.
+     * @param event_target the FX window component (such as an editable text
+     * field) where the event will occur, that is, where the keys will be typed.
+     * @param map the map from which character data will be retrieved
+     * @param ascii_number the ASCII decimal number of the character to be typed
+     */
     public static void fireEvent(EventTarget event_target, FxKeyMap map, int ascii_number) {
         FxCharConstruction charCon = map.getCharCon(ascii_number);
         
@@ -43,7 +51,14 @@ public class FxKeyEventSteno {
         Event.fireEvent(event_target, keyEvent);
         
     }
-    
+    /**
+     * Alternate method to initiate a sequence of {@code javafx.event.Event}
+     * for a String of printable characters. 
+     * @param event_target the FX window component (such as an editable text
+     * field) where the event will occur, that is, where the keys will be typed.
+     * @param map the map from which character data will be retrieved
+     * @param s the String of characters to be typed automatically
+     */
     public static void fireEvent(EventTarget event_target, FxKeyMap map, String s) {
         for (int i=0;i<s.length();i++) {
             //when checking for \, ensure that there is a char following the \

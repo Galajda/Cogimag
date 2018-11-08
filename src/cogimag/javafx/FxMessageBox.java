@@ -30,8 +30,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- * A modal dialog box that displays an informational message
- * with an OK button.
+ * A modal dialog box that displays an informational message with an OK button.
  * @author Michal G. 
  */
 public class FxMessageBox {

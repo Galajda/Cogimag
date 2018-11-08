@@ -16,7 +16,7 @@
  */
 package cogimag.javafx.input;
 
-import javafx.event.Event;
+//import javafx.event.Event;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -29,7 +29,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 /**
- *
+ * A JavaFX node combining an informational title, a combo box that the 
+ * developer may populate, add and clear buttons, and a non-editable display
+ * of the user's selections. The component is intended to limit the user's string
+ * input to pre-defined choices of characters, improving reliability and security.
  * @author MichalG HP Envy
  */
 public class ControlledStringInputComponent extends VBox{
@@ -41,7 +44,12 @@ public class ControlledStringInputComponent extends VBox{
     private static Button btnClear;
     
     private static VBox mainContainer;
-    
+    /**
+     * Constructs a component with a custom heading and the array of combo box
+     * values.
+     * @param instructions the instructions to the user for choosing values
+     * @param values the array of Strings from which the user may choose
+     */
     public ControlledStringInputComponent(String instructions, String[]values) {
         lblInstructions = new Label(instructions);
         
@@ -63,7 +71,6 @@ public class ControlledStringInputComponent extends VBox{
             public void handle(ActionEvent event) {
                 lblResult.setText("");
             }
-            
         });
         buttonContainer = new HBox();
         buttonContainer.getChildren().addAll(comboBox, btnAdd, btnClear);
@@ -75,20 +82,28 @@ public class ControlledStringInputComponent extends VBox{
         //does -fx-label-padding do anything?
         
         mainContainer = new VBox();
-        mainContainer.getChildren().addAll(lblInstructions, buttonContainer, lblResult);
-        
-        
+        mainContainer.getChildren().addAll(lblInstructions, buttonContainer, lblResult);        
     }
-    
+    /**
+     * Constructs a component with a default title and the array of combo box
+     * values.
+     * @param values the array of Strings from which the user may choose
+     */
     public ControlledStringInputComponent(String[]values) {
         this("Choose a value and add it to the string", values);
     }
-    
+    /**
+     * Retrieves the component for placement in the application window.
+     * @return the component (a VBox) which may be added to an FX node.
+     */
     public VBox getComponent() {
         return mainContainer;
     }
-    
-    
+    /**
+     * Retrieves the user's input
+     * @return the string which the user has built by adding selections from
+     * the combo box
+     */    
     public String getString() {
         return lblResult.getText();
     }
