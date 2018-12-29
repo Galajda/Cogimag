@@ -31,7 +31,7 @@ import android.content.res.XmlResourceParser;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.util.Log;
-
+//add android library from C:\Users\me\Downloads\Android\BareSDK\platforms\android-28\android.jar
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
@@ -58,7 +58,7 @@ public class XpathLayoutParser {
     Document layoutDoc;
 
     public XpathLayoutParser(Context c,int layoutResourceId) {
-                xPath = XPathFactory.newInstance().newXPath();
+        xPath = XPathFactory.newInstance().newXPath();
         context = c;
         resourceId = layoutResourceId;
         xmlAsString = getXmlAsString();
@@ -274,13 +274,14 @@ public class XpathLayoutParser {
         //inflate layout method
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        View layoutRoot = inflater.inflate(R.layout.content_menu_sky_color, null);
+//        View layoutRoot = inflater.inflate(R.layout.content_menu_sky_color, null);
+//need reference to R
 
 
         //use this to rebuild the view?
         //inflater.setFactory();
 
-        android.view.ViewTreeObserver observer = layoutRoot.getViewTreeObserver();
+//        android.view.ViewTreeObserver observer = layoutRoot.getViewTreeObserver();
         //doc A view tree observer is used to register listeners that can be notified of global changes in the view tree.
 
 
